@@ -24,8 +24,8 @@
   "gridUnits": "m",
   "primaryTokenAttribute": "base.health",
   "secondaryTokenAttribute": "base.hit-dice",
-  "url": "",
-  "manifest": "",
-  "download": "",
+  "url": "https://github.com/Shaf074/shazhack",
+  "manifest": "https://raw.githubusercontent.com/Shaf074/shazhack/main/system.json",
+  "download": "https://github.com/Shaf074/shazhack/releases/download/0.0.3/shazhack-main-0.0.3.zip",
   "license": "LICENSE.txt"
 }
