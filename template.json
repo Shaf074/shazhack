@@ -1,0 +1,102 @@
+{
+  "Actor": {
+    "types": ["character","npc"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 10,
+          "min": 1,
+          "max": 10
+        },
+        "hit-dice": {
+          "value": 1,
+          "min": 0,
+          "max": 1
+        }
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "biography": "",
+      "attributes": {
+        "level": {
+          "value": 1
+        }
+      },
+      "abilities": {
+        "phys": {
+          "value": 10
+        },
+        "agil": {
+          "value": 10
+        },
+        "intu": {
+          "value": 10
+        },
+        "pres": {
+          "value": 10
+        }
+      }
+    },
+    "npc": {
+      "templates": ["base"],
+      "biography": "",
+      "attributes": {
+        "level": {
+          "value": 1
+        }
+      },
+      "abilities": {
+        "phys": {
+          "value": 10
+        },
+        "agil": {
+          "value": 10
+        },
+        "intu": {
+          "value": 10
+        },
+        "pres": {
+          "value": 10
+        }
+      }
+    }
+  },
+  "Item": {
+    "types": ["item","equipment","weapon","armour","feat"],
+    "templates": {
+      "base": {
+        "description": ""
+      },
+      "item-base": {
+        "cost": 0,
+        "encumbrance": 1
+      }
+    },
+    "item": {
+      "templates": ["base", "item-base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "equipment": {
+      "templates": ["base", "item-base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "weapon": {
+      "templates": ["base", "item-base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "armour": {
+      "templates": ["base", "item-base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "feat": {
+      "templates": ["base"],
+      "level": 1,
+      "choice": ""
+    }
+  }
+}
