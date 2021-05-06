@@ -1,8 +1,8 @@
 {
   "name": "shazhack",
-  "title": "ShaZHacK 1.0",
+  "title": "ShaZHacK",
   "description": "ShaZHacK system for FoundryVTT!",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "minimumCoreVersion": "0.7.5",
   "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,
