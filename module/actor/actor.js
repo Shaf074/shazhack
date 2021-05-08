@@ -2,7 +2,7 @@
  * Extend the base Actor entity by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class BoilerplateActor extends Actor {
+export class ShazHackActor extends Actor {
 
   /**
    * Augment the basic actor data with additional dynamic data.
@@ -37,7 +37,7 @@ export class BoilerplateActor extends Actor {
   }
 
   _prepareNPCData(actorData) {
-
+    const data = actorData.data;
 
 
     
