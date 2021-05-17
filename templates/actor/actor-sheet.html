@@ -45,7 +45,18 @@
             {{/each}}
           </div>
             <div class="resource flex-group-center">
-
+              <label for="data.health.value" class="resource-label">Attack Bonus</label>
+              <div class="resource-content flexrow flex-center flex-between">
+                <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+                <span> / </span>
+                <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
+            </div>
+            <div class="resource flex-group-center">
+              <label for="data.health.value" class="resource-label">Encumbrance</label>
+              <div class="resource-content flexrow flex-center flex-between">
+                <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+                <span> / </span>
+                <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
             </div>
           </div>
         </div>
