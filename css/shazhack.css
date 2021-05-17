@@ -4,6 +4,9 @@
   font-family: "Roboto", sans-serif;
 }
 
+.shazhack .window-content-section {
+  background:  url("page.png");
+}
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
@@ -89,8 +92,8 @@
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
-  padding: 5px;
-  border: 1px solid #999;
+  padding: 3px;
+  border: 0.5px solid #999;
 }
 
 .flex-group-left {
@@ -130,8 +133,8 @@
 
 .shazhack .sheet-header {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 295px;
-  flex: 0 0 295px;
+  -ms-flex: 0 0 200px;
+  flex: 0 0 260px;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -149,11 +152,13 @@
 }
 
 .shazhack .sheet-header .profile-img {
+  object-fit: contain;
   -webkit-box-flex: 0;
   -ms-flex: 0 0 200px;
   flex: 0 0 200px;
   height: 200px;
   margin-right: 10px;
+  border: 0px solid #000;
 }
 
 .shazhack .sheet-header .header-fields {
@@ -187,6 +192,8 @@
   height: 100%;
 }
 
+
+
 .shazhack .tox .tox-editor-container {
   background: #fff;
 }
@@ -197,13 +204,23 @@
 
 .shazhack .resource-label {
   font-weight: bold;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  min-width: 60%;
+  text-align: left;
+}
+
+.shazhack .label-padding {
+  min-width: 25%;
 }
 
 .shazhack .tabs {
   height: 40px;
   border-top: 1px solid #AAA;
   border-bottom: 1px solid #AAA;
+}
+
+.shazhack .split-tab {
+  min-height: 280px;
 }
 
 .shazhack .tabs .item {

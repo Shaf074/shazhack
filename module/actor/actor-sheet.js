@@ -9,7 +9,7 @@ export class ShazHackActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["shazhack", "sheet", "actor"],
       template: "systems/shazhack/templates/actor/actor-sheet.html",
-      width: 600,
+      width: 630,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
@@ -21,9 +21,9 @@ export class ShazHackActorSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr of Object.values(data.data.totalFeats)) {
-      attr.isCheckbox = attr.dtype === "Boolean";
-    }
+    // for (let attr of Object.values(data.data.numFeats)) {
+    //   attr.isCheckbox = attr.dtype === "Boolean";
+    // }
 
     // Prepare items.
     if (this.actor.data.type == 'character') {
@@ -44,8 +44,9 @@ export class ShazHackActorSheet extends ActorSheet {
     const actorData = sheetData.actor;
 
     // Initialize containers.
+    const backgrounds = [];
     const gear = [];
-    const features = [];
+    const feats = [];
     const spheres = [];
 
     // Iterate through items, allocating to containers
@@ -53,13 +54,17 @@ export class ShazHackActorSheet extends ActorSheet {
     for (let i of sheetData.items) {
       let item = i.data;
       i.img = i.img || DEFAULT_TOKEN;
+      // Append to backgrounds.
+       if (i.type === 'background') {
+         backgrounds.push(i);
+      }
       // Append to gear.
       if (i.type === 'item') {
         gear.push(i);
       }
       // Append to features.
       else if (i.type === 'feat') {
-        features.push(i);
+        feats.push(i);
       }
       // Append to spells.
       else if (i.type === 'sphere') {
@@ -68,8 +73,9 @@ export class ShazHackActorSheet extends ActorSheet {
     }
 
     // Assign and return
+    actorData.backgrounds = backgrounds;
     actorData.gear = gear;
-    actorData.features = features;
+    actorData.features = feats;
     actorData.spheres = spheres;
   }
 
@@ -81,6 +87,13 @@ export class ShazHackActorSheet extends ActorSheet {
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
+
+    //edit attributes
+    html.find('.ability-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.sheet.render(true);
+    });
 
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));

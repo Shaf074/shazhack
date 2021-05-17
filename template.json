@@ -4,11 +4,11 @@
     "templates": {
       "base": {
         "health": {
-          "value": 10,
-          "min": 1,
-          "max": 10
+          "value": 4,
+          "min": 0,
+          "max": 4
         },
-        "hit-dice": {
+        "hitDice": {
           "value": 1,
           "min": 0,
           "max": 1
@@ -18,7 +18,21 @@
     "character": {
       "templates": ["base"],
       "biography": "",
-      "totalFeats": 0,
+      "numFeats": {
+        "value": 5
+      },
+      "attackBonus": {
+        "value": 1
+      },
+      "armourDie": {
+        "value": "0"
+      },
+      "backgrounds": {},
+      "encumbrance": {
+        "value": 1,
+        "min": 0,
+        "max": 10
+      },
       "abilities": {
         "Physique": {
           "value": 0
@@ -59,7 +73,7 @@
     }
   },
   "Item": {
-    "types": ["item","equipment","weapon","armour","feat","sphere"],
+    "types": ["item","equipment","weapon","armour","feat","background","sphere"],
     "templates": {
       "base": {
         "name": "",
@@ -95,10 +109,14 @@
       "level": 1,
       "choice": ""
     },
+    "background": {
+      "templates": ["base"],
+      "level": 1
+    },
     "sphere": {
       "templates": ["base"],
       "level": 1,
-      "choice": ""
+      "value": 0
     }
   }
 }

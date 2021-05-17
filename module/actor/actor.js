@@ -34,6 +34,9 @@ export class ShazHackActor extends Actor {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value));
     }
+    data.hitDice.max = 1 + Math.floor((data.numFeats.value-5)/2);
+    data.attackBonus.value = Math.floor((data.numFeats.value-5)/4);
+    data.encumbrance.max = 10 + (data.abilities.Physique.value * 3);
   }
 
   _prepareNPCData(actorData) {
