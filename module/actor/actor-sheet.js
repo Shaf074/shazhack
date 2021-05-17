@@ -21,7 +21,7 @@ export class ShazHackActorSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr of Object.values(data.data.attributes)) {
+    for (let attr of Object.values(data.data.totalFeats)) {
       attr.isCheckbox = attr.dtype === "Boolean";
     }
 
@@ -46,18 +46,7 @@ export class ShazHackActorSheet extends ActorSheet {
     // Initialize containers.
     const gear = [];
     const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: []
-    };
+    const spheres = [];
 
     // Iterate through items, allocating to containers
     // let totalWeight = 0;
@@ -69,21 +58,19 @@ export class ShazHackActorSheet extends ActorSheet {
         gear.push(i);
       }
       // Append to features.
-      else if (i.type === 'feature') {
+      else if (i.type === 'feat') {
         features.push(i);
       }
       // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
-        }
+      else if (i.type === 'sphere') {
+        spheres.push(i);
       }
     }
 
     // Assign and return
     actorData.gear = gear;
     actorData.features = features;
-    actorData.spells = spells;
+    actorData.spheres = spheres;
   }
 
   /* -------------------------------------------- */

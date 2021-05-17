@@ -18,23 +18,19 @@
     "character": {
       "templates": ["base"],
       "biography": "",
-      "attributes": {
-        "level": {
-          "value": 1
-        }
-      },
+      "totalFeats": 0,
       "abilities": {
-        "phys": {
-          "value": 10
+        "Physique": {
+          "value": 0
         },
-        "agil": {
-          "value": 10
+        "Agility": {
+          "value": 0
         },
-        "intu": {
-          "value": 10
+        "Intution": {
+          "value": 0
         },
-        "pres": {
-          "value": 10
+        "Presence": {
+          "value": 0
         }
       }
     },
@@ -48,24 +44,25 @@
       },
       "abilities": {
         "phys": {
-          "value": 10
+          "value": 0
         },
         "agil": {
-          "value": 10
+          "value": 0
         },
         "intu": {
-          "value": 10
+          "value": 0
         },
         "pres": {
-          "value": 10
+          "value": 0
         }
       }
     }
   },
   "Item": {
-    "types": ["item","equipment","weapon","armour","feat"],
+    "types": ["item","equipment","weapon","armour","feat","sphere"],
     "templates": {
       "base": {
+        "name": "",
         "description": ""
       },
       "item-base": {
@@ -94,6 +91,11 @@
       "weight": 0
     },
     "feat": {
+      "templates": ["base"],
+      "level": 1,
+      "choice": ""
+    },
+    "sphere": {
       "templates": ["base"],
       "level": 1,
       "choice": ""

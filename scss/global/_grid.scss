@@ -1,4 +1,9 @@
 .grid,
+.grid-1col {
+  display: grid;
+  grid-column: span 1 / span 1;
+  grid-template-columns: minmax(0, 1fr);
+}
 .grid-2col {
   display: grid;
   grid-column: span 2 / span 2;
@@ -7,7 +12,6 @@
   margin: 10px 0;
   padding: 0;
 }
-
 .grid-3col {
   grid-column: span 3 / span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
