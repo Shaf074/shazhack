@@ -45,7 +45,9 @@ export class ShazHackActorSheet extends ActorSheet {
 
     // Initialize containers.
     const backgrounds = [];
-    const gear = [];
+    const equipment = [];
+    const weapons = [];
+    const armour = [];
     const feats = [];
     const spheres = [];
 
@@ -59,8 +61,14 @@ export class ShazHackActorSheet extends ActorSheet {
          backgrounds.push(i);
       }
       // Append to gear.
-      if (i.type === 'item') {
-        gear.push(i);
+      if (i.type === 'equipment') {
+        equipment.push(i);
+      }
+      if (i.type === 'weapon') {
+        weapons.push(i);
+      }
+      if (i.type === 'armour') {
+        armour.push(i);
       }
       // Append to features.
       else if (i.type === 'feat') {
@@ -74,7 +82,9 @@ export class ShazHackActorSheet extends ActorSheet {
 
     // Assign and return
     actorData.backgrounds = backgrounds;
-    actorData.gear = gear;
+    actorData.equipment = equipment;
+    actorData.weapons = weapons;
+    actorData.armour = armour;
     actorData.features = feats;
     actorData.spheres = spheres;
   }

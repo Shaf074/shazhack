@@ -4,8 +4,8 @@
   font-family: "Roboto", sans-serif;
 }
 
-.shazhack .window-content-section {
-  background:  url("page.png");
+.shazhack .window-content {
+  background:  url("../page.png");
 }
 .rollable:hover, .rollable:focus {
   color: #000;

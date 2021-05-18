@@ -86,23 +86,23 @@
     },
     "item": {
       "templates": ["base", "item-base"],
-      "quantity": 1,
-      "weight": 0
+      "quantity": 1
     },
     "equipment": {
       "templates": ["base", "item-base"],
       "quantity": 1,
-      "weight": 0
+      "value": ""
     },
     "weapon": {
       "templates": ["base", "item-base"],
-      "quantity": 1,
-      "weight": 0
+      "damage": 0,
+      "type" : "",
+      "weaponTags": {}
     },
     "armour": {
       "templates": ["base", "item-base"],
-      "quantity": 1,
-      "weight": 0
+      "type": "",
+      "armourDie": "0"
     },
     "feat": {
       "templates": ["base"],
@@ -115,8 +115,7 @@
     },
     "sphere": {
       "templates": ["base"],
-      "level": 1,
-      "value": 0
+      "level": 1
     }
   }
 }
