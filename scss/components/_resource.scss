@@ -1,4 +1,25 @@
 .resource-label {
   font-weight: bold;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  min-width: 55%;
+  text-align: left;
+}
+
+.resource-label-currency{
+  font-weight: bold;
+  text-transform: capitalize;
+  max-width: 7%;
+  -ms-flex-align: end;
+  text-align: right;
+  margin-right: 2px;
+}
+
+.resource-label-noroll {
+  font-weight: bold;
+  text-transform: capitalize;
+  min-width: 70%;
+  text-align: left;
+}
+.shazhack .resource-input {
+  max-width: 10%;
 }

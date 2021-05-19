@@ -26,6 +26,17 @@
 
   .item-name {
     margin: 0;
+    min-width: 40%;
+  }
+
+  .item-name-weapon {
+    margin: 0;
+    min-width: 20%;
+  }
+
+  .item-name-level {
+    margin: 0;
+    max-width: 14%;
   }
 
   .item-controls {

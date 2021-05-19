@@ -3,7 +3,7 @@
 }
 
 .sheet-header {
-  flex: 0 0 420px;
+  flex: 0 0 260px;
   overflow: hidden;
   display: flex;
   flex-direction: row;
@@ -12,9 +12,28 @@
   margin-bottom: 10px;
 
   .profile-img {
+    object-fit: contain;
+    flex: 0 0 200px;
+    height: 200px;
+    margin-right: 10px;
+    border: 0px solid #000;
+  }
+
+  .profile-img-item {
+    object-fit: contain;
+    vertical-align: top;
     flex: 0 0 100px;
     height: 100px;
     margin-right: 10px;
+    border: 0px solid #000;
+  }
+
+  .roll-img {
+    object-fit: contain;
+    vertical-align: top;
+    flex: 0 0 20px;
+    height: 20px;
+    border: 0.5px solid #000;
   }
 
   .header-fields {

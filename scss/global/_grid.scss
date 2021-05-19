@@ -3,6 +3,9 @@
   display: grid;
   grid-column: span 1 / span 1;
   grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
 }
 .grid-2col {
   display: grid;
@@ -68,8 +71,8 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 5px;
-  border: 1px solid #999;
+  padding: 2px;
+  border: 0px solid #999;
 }
 
 .flex-group-left {

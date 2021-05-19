@@ -167,9 +167,9 @@
   object-fit: contain;
   -webkit-box-flex: 0;
   vertical-align: top;
-  -ms-flex: 0 0 100px;
-  flex: 0 0 100px;
-  height: 100px;
+  -ms-flex: 0 0 80px;
+  flex: 0 0 80px;
+  height: 80px;
   margin-right: 10px;
   border: 0px solid #000;
 }
@@ -182,18 +182,6 @@
   flex: 0 0 20px;
   height: 20px;
   border: 0.5px solid #000;
-}
-
-
-.shazhack .sheet-header .profile-img-item {
-  object-fit: contain;
-  -webkit-box-flex: 0;
-  vertical-align: top;
-  -ms-flex: 0 0 80px;
-  flex: 0 0 80px;
-  height: 80px;
-  margin-right: 10px;
-  border: 0px solid #000;
 }
 
 .shazhack .sheet-header .header-fields {
