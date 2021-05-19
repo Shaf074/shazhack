@@ -1,15 +1,33 @@
 <form class="{{cssClass}}" autocomplete="off">
     <header class="sheet-header">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <img class="profile-img-item" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+            <div class="grid grid-3col">
+                <div class="resource">
+                    <label class="resource-label">Type</label>
+                      <input type="text" name="data.type" value="{{data.type}}" data-dtype="String"/>
+                  </div>
+                  <div class="resource">
+                    <label class="resource-label">Damage</label>
+                      <input type="text" name="data.damage" value="{{data.damage}}" data-dtype="String"/>
+                  </div>
+                  <div class="resource">
+                    <label class="resource-label">Encumbrance</label>
+                      <input type="text" name="data.encumbrance" value="{{data.encumbrance}}" data-dtype="Number"/>
+                  </div>
+              </div>
+              <div class="resource">
+                <label class="resource-label">Weapon Tags</label>
+                  <input type="text" name="data.weaponTags" value="{{data.weaponTags}}" data-dtype="String"/>
+              </div>
         </div>
     </header>
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="attributes">Attributes</a>
+        <!-- <a class="item" data-tab="attributes">Attributes</a> -->
     </nav>
 
     {{!-- Sheet Body --}}
@@ -20,9 +38,9 @@
             {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
         </div>
 
-        {{!-- Attributes Tab --}}
+        <!-- {{!-- Attributes Tab --}}
         <div class="tab attributes" data-group="primary" data-tab="attributes">
             {{!-- As you add new fields, add them in here! --}}
-        </div>
+        </div> -->
     </section>
 </form>

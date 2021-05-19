@@ -21,6 +21,7 @@
       "numFeats": {
         "value": 5
       },
+      "currency":0,
       "attackBonus": {
         "value": 1
       },
@@ -91,13 +92,13 @@
     "equipment": {
       "templates": ["base", "item-base"],
       "quantity": 1,
-      "value": ""
+      "usage": ""
     },
     "weapon": {
       "templates": ["base", "item-base"],
-      "damage": 0,
+      "damage": "",
       "type" : "",
-      "weaponTags": {}
+      "weaponTags": ""
     },
     "armour": {
       "templates": ["base", "item-base"],

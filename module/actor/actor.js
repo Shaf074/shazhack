@@ -35,6 +35,10 @@ export class ShazHackActor extends Actor {
       // Calculate the modifier using d20 rules.
       ability.mod = Math.floor((ability.value));
     }
+    var totalEnc = 0;
+    var allItem = items.filter(word => word.type == "weapon" || word.type == "armour"|| word.type == "equipment" );
+    allItem.forEach(a => totalEnc += parseInt(a.data.data.encumbrance));
+    data.encumbrance.value = totalEnc;
     data.numFeats.value = items.filter(word => word.type == "feat").length;
     if (data.numFeats.value >= 5) {
       data.hitDice.max = 1 + Math.floor((data.numFeats.value-5)/2);

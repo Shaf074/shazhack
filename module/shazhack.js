@@ -17,7 +17,7 @@ Hooks.once('init', async function() {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20 + @abilities.dex.mod",
+    formula: "1d4",
     decimals: 2
   };
 
@@ -45,6 +45,11 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper('toLowerCase', function(str) {
     return str.toLowerCase();
   });
+});
+Handlebars.registerHelper('textField', function(options) {
+  var attribs;
+  attribs = JSON.parse(options.hash.dataAttribs);
+  console.log(attribs.text + " -- " + attribs.class);
 });
 
 Hooks.once("ready", async function() {

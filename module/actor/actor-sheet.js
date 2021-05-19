@@ -9,8 +9,8 @@ export class ShazHackActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["shazhack", "sheet", "actor"],
       template: "systems/shazhack/templates/actor/actor-sheet.html",
-      width: 630,
-      height: 600,
+      width: 640,
+      height: 665,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
@@ -57,8 +57,8 @@ export class ShazHackActorSheet extends ActorSheet {
       let item = i.data;
       i.img = i.img || DEFAULT_TOKEN;
       // Append to backgrounds.
-       if (i.type === 'background') {
-         backgrounds.push(i);
+      if (i.type === 'background') {
+        backgrounds.push(i);
       }
       // Append to gear.
       if (i.type === 'equipment') {
@@ -124,6 +124,7 @@ export class ShazHackActorSheet extends ActorSheet {
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
+    html.find('.rollable-armour').click(this._onRollArmour.bind(this));
 
     // Drag events for macros.
     if (this.actor.owner) {
@@ -141,6 +142,10 @@ export class ShazHackActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
+
+
+
+
   _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
@@ -163,6 +168,9 @@ export class ShazHackActorSheet extends ActorSheet {
     return this.actor.createOwnedItem(itemData);
   }
 
+
+
+
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
@@ -172,7 +180,34 @@ export class ShazHackActorSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
+    let d = Dialog.prompt({
+      title: "Choose Attribute:",
+      content: `
+      <form>
+        <div class="form-group">
+          <label>Input text</label>
+          <input type='text' id='inputId' name='inputField'></input>
+        </div>
+      </form>`,
+      label: "OK",
+      callback: (contents) => {
+        dataset.roll += "+" + contents.find("#inputId")[0].value + "+" + dataset.actor.Physique.value;
+        if (dataset.roll) {
+          let roll = new Roll(dataset.roll, this.actor.data.data);
+          let label = dataset.label ? `Rolling ${dataset.label}` : '';
+          roll.roll().toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: label
+          });
+        }
+      }
+    });
+  }
 
+  _onRollArmour(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
     if (dataset.roll) {
       let roll = new Roll(dataset.roll, this.actor.data.data);
       let label = dataset.label ? `Rolling ${dataset.label}` : '';
@@ -182,5 +217,4 @@ export class ShazHackActorSheet extends ActorSheet {
       });
     }
   }
-
 }

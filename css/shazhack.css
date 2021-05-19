@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Martel:wght@400;800&family=Roboto:wght@300;400;500&display=swap");
 /* Global styles */
 .window-app {
-  font-family: "Roboto", sans-serif;
+  font-family: "Balthazar", serif;
 }
 
 .shazhack .window-content {
@@ -10,6 +10,7 @@
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
+  box-shadow: 0 0 5px red;
   cursor: pointer;
 }
 
@@ -92,8 +93,8 @@
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
-  padding: 3px;
-  border: 0.5px solid #999;
+  padding: 2px;
+  border: 0px solid #999;
 }
 
 .flex-group-left {
@@ -162,6 +163,39 @@
   border: 0px solid #000;
 }
 
+.shazhack .sheet-header .profile-img-item {
+  object-fit: contain;
+  -webkit-box-flex: 0;
+  vertical-align: top;
+  -ms-flex: 0 0 100px;
+  flex: 0 0 100px;
+  height: 100px;
+  margin-right: 10px;
+  border: 0px solid #000;
+}
+
+.shazhack .sheet-header .roll-img {
+  object-fit: contain;
+  -webkit-box-flex: 0;
+  vertical-align: top;
+  -ms-flex: 0 0 20px;
+  flex: 0 0 20px;
+  height: 20px;
+  border: 0.5px solid #000;
+}
+
+
+.shazhack .sheet-header .profile-img-item {
+  object-fit: contain;
+  -webkit-box-flex: 0;
+  vertical-align: top;
+  -ms-flex: 0 0 80px;
+  flex: 0 0 80px;
+  height: 80px;
+  margin-right: 10px;
+  border: 0px solid #000;
+}
+
 .shazhack .sheet-header .header-fields {
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -206,8 +240,28 @@
 .shazhack .resource-label {
   font-weight: bold;
   text-transform: capitalize;
-  min-width: 60%;
+  min-width: 55%;
   text-align: left;
+}
+
+.shazhack .resource-label-currency {
+  font-weight: bold;
+  text-transform: capitalize;
+  max-width: 7%;
+  -ms-flex-align: end;
+  text-align: right;
+  margin-right: 2px;
+}
+
+
+.shazhack .resource-label-noroll {
+  font-weight: bold;
+  text-transform: capitalize;
+  min-width: 70%;
+  text-align: left;
+}
+.shazhack .resource-input {
+  max-width: 10%;
 }
 
 .shazhack .label-padding {
@@ -265,11 +319,23 @@
 
 .shazhack .items-list .item-name {
   margin: 0;
+  min-width: 40%;
 }
+
+.shazhack .items-list .item-name-weapon {
+  margin: 0;
+  min-width: 20%;
+}
+
+.shazhack .items-list .item-name-level {
+  margin: 0;
+  max-width: 14%;
+}
+
 
 .shazhack .items-list .item-controls {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 86px;
-  flex: 0 0 86px;
+  /* -ms-flex: 0 0 86px;
+  flex: 0 0 86px; */
   text-align: right;
 }
