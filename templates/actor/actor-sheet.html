@@ -62,9 +62,10 @@
           </div>
           <div class="resource flex-group-center">
             <div class="ability flexrow flex-group-center">
-              <label for="data.attackBonus.value" class="resource-label">Attack Bonus:</label>
-              <div class="resource-content flexrow flex-center flex-between resource-input">
-                <input readonly type="text" name="data.attackBonus.value" value="{{data.attackBonus.value}}"
+              <label for="data.attackBonus.value" class="resource-label-noroll">Attack Bonus:</label>
+              <div class="resource-content flexrow flex-center flex-between">
+                <span class="resource-input"></span>
+                <input class="resource-input" readonly type="text" name="data.attackBonus.value" value="{{data.attackBonus.value}}"
                   data-dtype="Number" />
               </div>
             </div>
