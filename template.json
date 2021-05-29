@@ -74,7 +74,7 @@
     }
   },
   "Item": {
-    "types": ["item","equipment","weapon","armour","feat","background","sphere"],
+    "types": ["item","equipment","weapon","armour","feat","background","sphere","esoterica"],
     "templates": {
       "base": {
         "name": "",
@@ -113,6 +113,9 @@
     "background": {
       "templates": ["base"],
       "level": 1
+    },
+    "esoterica": {
+      "templates": ["base"]
     },
     "sphere": {
       "templates": ["base"],
