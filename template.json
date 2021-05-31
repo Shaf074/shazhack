@@ -87,7 +87,7 @@
       }
     },
     "item": {
-      "templates": ["base", "item-base"],
+      "templates": ["base", "item-base"]
     },
     "equipment": {
       "templates": ["base", "item-base"],
