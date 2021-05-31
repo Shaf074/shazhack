@@ -386,13 +386,13 @@ export class ShazHackActorSheet extends ActorSheet {
       abilityBonus = this.actor.data.data.abilities.Physique.value;
       if (dataset.roll) {
         let roll = new Roll("d20+" + abilityBonus + "+" + this.actor.data.data.attackBonus.value, this.actor.data.data);
-        let label = dataset.label ? `Rolling ${dataset.label}` : '';
+        let label = dataset.label ? `Rolling ${dataset.label} Attack` : '';
         roll.roll().toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
           flavor: label
         });
         let roll2 = new Roll(dataset.roll, this.actor.data.data);
-        let label2 = dataset.label ? `Rolling ${dataset.label}` : '';
+        let label2 = dataset.label ? `Rolling ${dataset.label} Damage` : '';
         roll2.roll().toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
           flavor: label2
