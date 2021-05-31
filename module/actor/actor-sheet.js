@@ -45,7 +45,7 @@ export class ShazHackActorSheet extends ActorSheet {
     return data;
   }
 
-  
+
 
   /**
    * Organize and classify Items for Character sheets.
@@ -99,10 +99,9 @@ export class ShazHackActorSheet extends ActorSheet {
       }
     }
 
-    console.log(actorData.data.abilities.Intuition.value);
 
-    spheres.forEach( function(a) {
-      if(actorData.data.abilities.Intuition.value > actorData.data.abilities.Presence.value) {
+    spheres.forEach(function (a) {
+      if (actorData.data.abilities.Intuition.value > actorData.data.abilities.Presence.value) {
         if (a.data.level == 1) {
           a.data.reduction = Math.ceil(actorData.data.abilities.Intuition.value / 2) * -1;
         } else if (a.data.level == 2) {
@@ -123,15 +122,13 @@ export class ShazHackActorSheet extends ActorSheet {
 
 
     // Assign and return
-    actorData.backgrounds = backgrounds;  
+    actorData.backgrounds = backgrounds;
     actorData.esoterica = esoterica;
     actorData.equipment = equipment;
     actorData.weapons = weapons;
     actorData.armour = armour;
     actorData.features = feats;
     actorData.spheres = spheres;
-
-    console.log(actorData.name);
   }
 
   /* -------------------------------------------- */
@@ -169,7 +166,9 @@ export class ShazHackActorSheet extends ActorSheet {
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
-    html.find('.rollable-armour').click(this._onRollArmour.bind(this));
+    html.find('.rollable-background').click(this._onRollBackground.bind(this));
+    html.find('.rollable-weapon').click(this._onRollWeapon.bind(this));
+    html.find('.rollable-sphere').click(this._onRollSphere.bind(this));
 
     // Drag events for macros.
     if (this.actor.owner) {
@@ -221,7 +220,23 @@ export class ShazHackActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
+
   _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+
+    if (dataset.roll) {
+      let roll = new Roll(dataset.roll, this.actor.data.data);
+      let label = dataset.label ? `Rolling ${dataset.label}` : '';
+      roll.roll().toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label
+      });
+    }
+  }
+
+  _onRollBackground(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
@@ -231,14 +246,18 @@ export class ShazHackActorSheet extends ActorSheet {
       <form>
         <div class="form-group">
           <label>Input text</label>
-          <input type='text' id='inputId' name='inputField'></input>
+          <select name="attribute-select" id="attribute-select">
+            <option value="Physique">Physique</option>
+            <option value="Agility">Agility</option>
+            <option value="Intuition">Intuition</option>
+            <option value="Presence">Presence</option>
+          </select>
         </div>
       </form>`,
       label: "OK",
-      callback: (contents) => {
-        dataset.roll += "+" + contents.find("#inputId")[0].value + "+" + dataset.actor.Physique.value;
+      callback: (html) => {
         if (dataset.roll) {
-          let roll = new Roll(dataset.roll, this.actor.data.data);
+          let roll = new Roll(dataset.roll + "+" + this.actor.data.data.abilities[html.find('[id=attribute-select]')[0].value].value, this.actor.data.data);
           let label = dataset.label ? `Rolling ${dataset.label}` : '';
           roll.roll().toMessage({
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -249,17 +268,136 @@ export class ShazHackActorSheet extends ActorSheet {
     });
   }
 
-  _onRollArmour(event) {
+  _onRollSphere(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-    if (dataset.roll) {
-      let roll = new Roll(dataset.roll, this.actor.data.data);
-      let label = dataset.label ? `Rolling ${dataset.label}` : '';
-      roll.roll().toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label
+    let d = Dialog.prompt({
+      title: "Choose Attribute:",
+      content: `
+      <form>
+        <div class="form-group flexrow">
+          <label>Select Attribute:</label>
+          <select name="attribute-select" id="attribute-select">
+            <option value="Intuition">Intuition</option>
+            <option value="Presence">Presence</option>
+            <option value="NoRoll">No Roll</option>
+          </select>
+        </div>
+        <div class="form-group flexrow">
+          <label>Size/Distance:</label>
+          <select name="sizedistance-select" id="sizedistance-select">
+            <option value=0 >Single Target/Short Range</option>
+            <option value=1>Small Effect Area/Medium Range</option>
+            <option value=2>Moderate Effect Area/Long Range</option>
+            <option value=4>Large Effect Area/Very Long Range</option>
+          </select>
+        </div>
+        <div class="form-group flexrow">
+          <label>Duration:</label>
+          <select name="duration-select" id="duration-select">
+            <option value=0 >Instant</option>
+            <option value=1>Short</option>
+            <option value=2>Medium</option>
+            <option value=4>Long</option>
+          </select>
+        </div>
+        <div class="form-group flexrow">
+          <label>Potency:</label>
+          <select name="potency-select" id="potency-select">
+            <option value=0 >Minimal</option>
+            <option value=1>Minor</option>
+            <option value=2>Moderate</option>
+            <option value=4>Major</option>
+          </select>
+        </div>
+      </form>`,
+      label: "OK",
+      callback: (html) => {
+        if (html.find('[id=attribute-select]')[0].value != "NoRoll") {
+          var abilityBonus = this.actor.data.data.abilities[html.find('[id=attribute-select]')[0].value].value;
+          let roll = new Roll("d20+" + abilityBonus, this.actor.data.data);
+          let label = dataset.label ? `Rolling ${dataset.label} Spell` : '';
+          roll.roll().toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: label
+          });
+        }
+        var cost = parseInt(html.find('[id=sizedistance-select]')[0].value) +
+          parseInt(html.find('[id=duration-select]')[0].value) +
+          parseInt(html.find('[id=potency-select]')[0].value) +
+          parseInt(dataset.reduction);
+        if (cost <= 0) {
+          if (parseInt(html.find('[id=sizedistance-select]')[0].value) == 0 && parseInt(html.find('[id=duration-select]')[0].value) == 0 && parseInt(html.find('[id=potency-select]')[0].value) == 0) {
+            cost = 0
+          } else {
+            cost = 1;
+          }
+        }
+        ChatMessage.create({
+          speaker: { alias: this.actor.name },
+          content: "This costs " + cost + " hit point(s) to cast.",
+          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        });
+      }
+    });
+
+  }
+
+  _onRollWeapon(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    var abilityBonus = 0;
+    if (dataset.type == "Light") {
+      let d = Dialog.prompt({
+        title: "Choose Attribute:",
+        content: `
+        <form>
+          <div class="form-group">
+            <label>Select Attribute:</label>
+            <select name="attribute-select" id="attribute-select">
+              <option value="Physique">Physique</option>
+              <option value="Agility">Agility</option>
+
+            </select>
+          </div>
+        </form>`,
+        label: "OK",
+        callback: (html) => {
+          abilityBonus = this.actor.data.data.abilities[html.find('[id=attribute-select]')[0].value].value;
+          if (dataset.roll) {
+            let roll = new Roll("d20+" + abilityBonus + "+" + this.actor.data.data.attackBonus.value, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label} Attack` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
+            let roll2 = new Roll(dataset.roll, this.actor.data.data);
+            let label2 = dataset.label ? `Rolling ${dataset.label} Damage` : '';
+            roll2.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label2
+            });
+          }
+        }
       });
+    } else {
+      abilityBonus = this.actor.data.data.abilities.Physique.value;
+      if (dataset.roll) {
+        let roll = new Roll("d20+" + abilityBonus + "+" + this.actor.data.data.attackBonus.value, this.actor.data.data);
+        let label = dataset.label ? `Rolling ${dataset.label}` : '';
+        roll.roll().toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label
+        });
+        let roll2 = new Roll(dataset.roll, this.actor.data.data);
+        let label2 = dataset.label ? `Rolling ${dataset.label}` : '';
+        roll2.roll().toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label2
+        });
+      }
     }
   }
 }

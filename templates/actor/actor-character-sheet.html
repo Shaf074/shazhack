@@ -24,7 +24,7 @@
         <div class="resource flex-group-center">
           <div class="resource-content flexrow flex-center flex-between">
             <label for="data.hitDice.value" class="resource-label">Hit Dice:</label>
-            <img class="roll-img rollable" src="icons/svg/d20-highlight.svg" title="{{item.name}}" />
+            <img class="roll-img rollable" src="icons/svg/d20-highlight.svg" data-label="Hit Dice" title="{{data.hitDice}}" data-roll="d6" />
             <input class="resource-input" type="text" name="data.hitDice.value" value="{{data.hitDice.value}}"
               data-dtype="Number" />
             <span>/</span>
@@ -40,7 +40,7 @@
             {{#each data.abilities}}
             <div class="ability flexrow flex-group-center">
               <label for="data.abilities.{{@key}}.value" class="resource-label">{{@key}}: </label>
-              <img class="roll-img rollable" src="icons/svg/d20-highlight.svg" title="{{@key}}" />
+              <img class="roll-img rollable" src="icons/svg/d20-highlight.svg" data-label="{{@key}}" title="{{@key}}" data-roll="d20+{{this.value}}" />
               <input type="text" class="resource-input" name="data.abilities.{{@key}}.value" value="{{this.value}}" data-dtype="Number"/>
             </div>
             {{/each}}
@@ -103,7 +103,7 @@
             </li>
             {{#each actor.backgrounds as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
-              <div class="item-image rollable" padding-left: 2px; data-roll="d20+{{item.data.level}}d6kh1"
+              <div class="item-image rollable-background" padding-left: 2px; data-roll="d20+{{item.data.level}}d6kh1"
                 data-label="{{item.name}}" data-actor={{../data.abilities}}>
                 <img src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" />
               </div>
@@ -164,7 +164,7 @@
         </li>
         {{#each actor.armour as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
-          <img class="item-image rollable-armour" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" />
+          <img class="item-image rollable" src="icons/svg/d20-highlight.svg" data-label="{{item.name}}" title="{{item.name}}" width="24" height="24" data-roll="{{item.data.armourDie}}" />
           <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
           <h4 class="item-name">{{item.name}}</h4>
           <h4 class="item-name-level" text-align: right>{{item.data.type}}</h4>
@@ -194,7 +194,7 @@
         </li>
         {{#each actor.weapons as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
-          <img class="item-image rollable" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" />
+          <img class="item-image rollable-weapon" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" data-label="{{item.name}}" data-roll="{{item.data.damage}}" data-type="{{item.data.type}}"/>
           <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
           <h4 class="item-name-weapon">{{item.name}}</h4>
           <h4 class="item-name-weapon" text-align: right>{{item.data.weaponTags}}</h4>
@@ -225,7 +225,7 @@
         </li>
         {{#each actor.equipment as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
-          <img class="item-image rollable" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" />
+          <img class="item-image rollable" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" data-label="{{item.name}}" data-roll="{{item.data.usage}}" />
           <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
           <h4 class="item-name">{{item.name}}</h4>
           <h4 class="item-name-level" text-align: right>{{item.data.quantity}}</h4>
@@ -270,6 +270,7 @@
       <ol class="items-list">
         <li class="item flexrow item-header">
           <div class="item-image"></div>
+          <div class="item-image"></div>
           <div class="item-name">Name</div>
           <div class="item-name-level" text-align: right>Level</div>
           <div class="item-name-level" text-align: right>Cost Red.</div>
@@ -280,7 +281,8 @@
         </li>
         {{#each actor.spheres}}
         <li class="item flexrow" data-item-id="{{this._id}}">
-          <div class="item-image"><img src="{{this.img}}" title="{{this.name}}" width="24" height="24" /></div>
+          <img class="item-image rollable-sphere" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24" height="24" data-label="{{this.name}}" data-reduction="{{this.data.reduction}}" />
+          <div class="item-image"><img src="{{this.img}}"  title="{{this.name}}" width="24" height="24" /></div>
           <h4 class="item-name" title="{{actor.name}}">{{this.name}}</h4>
           <h4 class="item-name-level">{{this.data.level}}</h4>
           <h4 class="item-name-level">{{this.data.reduction}}</h4>

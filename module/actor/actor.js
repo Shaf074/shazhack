@@ -36,10 +36,11 @@ export class ShazHackActor extends Actor {
     // Make modifications to data here. For example:
 
     // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(data.abilities)) {
-      // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value));
-    }
+    // for (let [key, ability] of Object.entries(data.abilities)) {
+    //   // Calculate the modifier using d20 rules.
+    //   ability.mod = Math.floor((ability.value));
+    // }
+
     var totalEnc = 0;
     var allItem = items.filter(word => word.type == "weapon" || word.type == "armour" || word.type == "equipment");
     allItem.forEach(a => totalEnc += parseInt(a.data.data.encumbrance));
@@ -57,16 +58,12 @@ export class ShazHackActor extends Actor {
         attackFlag = 2;
       }
     }
-
-
-    console.log(attackFlag);
     if (data.numFeats.value >= 5) {
       data.hitDice.max = 1 + Math.floor((data.numFeats.value - 5) / 2);
       data.attackBonus.value = Math.floor((data.numFeats.value - 5) / 4);
       if (attackFlag == 1) {
         data.attackBonus.value = Math.floor((data.numFeats.value - 5) / 2);
       } else if (attackFlag == 2) {
-        console.log(data.numFeats.value-5);
         data.attackBonus.value = Math.floor((data.numFeats.value - 5));
       }
     } else {
