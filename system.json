@@ -2,7 +2,7 @@
   "name": "shazhack",
   "title": "ShaZHacK",
   "description": "ShaZHacK system for FoundryVTT!",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "minimumCoreVersion": "0.7.5",
   "compatibleCoreVersion": "0.7.10",
   "templateVersion": 2,
