@@ -18,6 +18,17 @@ export class ShazHackActorSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
+  get template() {
+    const path = "systems/shazhack/templates/actor";
+    // Return a single sheet for all item types.
+    // return `${path}/item-sheet.html`;
+
+    // Alternatively, you could use the following return statement to do a
+    // unique item sheet by type, like `weapon-sheet.html`.
+    return `${path}/actor-${this.actor.data.type}-sheet.html`;
+  }
+
+  /** @override */
   getData() {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
