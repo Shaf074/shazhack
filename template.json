@@ -82,16 +82,15 @@
       },
       "item-base": {
         "cost": 0,
-        "encumbrance": 1
+        "encumbrance": 1,
+        "quantity": 1
       }
     },
     "item": {
       "templates": ["base", "item-base"],
-      "quantity": 1
     },
     "equipment": {
       "templates": ["base", "item-base"],
-      "quantity": 1,
       "usage": ""
     },
     "weapon": {

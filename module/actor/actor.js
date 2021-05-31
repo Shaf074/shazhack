@@ -39,6 +39,11 @@ export class ShazHackActor extends Actor {
     var allItem = items.filter(word => word.type == "weapon" || word.type == "armour"|| word.type == "equipment" );
     allItem.forEach(a => totalEnc += parseInt(a.data.data.encumbrance));
     data.encumbrance.value = totalEnc;
+    var feats = items.filter(word => word.type == "feat");
+    feats.forEach(function(a) {
+        data.numFeats += a.data.level;  
+      }
+    });
     data.numFeats.value = items.filter(word => word.type == "feat").length;
     if (data.numFeats.value >= 5) {
       data.hitDice.max = 1 + Math.floor((data.numFeats.value-5)/2);
@@ -48,7 +53,7 @@ export class ShazHackActor extends Actor {
       data.attackBonus.value = 0;
     }
     
-    data.encumbrance.max = 10 + (data.abilities.Physique.value * 3);
+    data.encumbrance.max = 12 + (data.abilities.Physique.value * 2);
   }
 
   _prepareNPCData(actorData) {
