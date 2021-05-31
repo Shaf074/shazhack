@@ -21,7 +21,9 @@ export class ShazHackActor extends Actor {
 
     if (actorData.type === 'npc') this._prepareNPCData(actorData);
 
-    if (actorData.type === 'hirelings') this._prepareNPCData(actorData);
+    if (actorData.type === 'hireling') this._prepareHirelingData(actorData);
+
+    if (actorData.type === 'vehicle') this._prepareVehicleData(actorData);
 
   }
 
@@ -75,13 +77,27 @@ export class ShazHackActor extends Actor {
       data.hitDice.value = data.hitDice.max;
     }
 
-    data.encumbrance.max = 12 + (data.abilities.Physique.value * 2);
+    data.encumbrance.max = 10 + (data.abilities.Physique.value * 2);
     if (feats.find(a => a.data.name === "Div Ancestry")) {
       data.encumbrance.max = Math.floor(data.encumbrance.max * 1.5);
     }
   }
 
   _prepareNPCData(actorData) {
+    const data = actorData.data;
+
+
+
+  }
+
+  _prepareHirelingData(actorData) {
+    const data = actorData.data;
+
+
+
+  }
+
+  _prepareVehicleData(actorData) {
     const data = actorData.data;
 
 

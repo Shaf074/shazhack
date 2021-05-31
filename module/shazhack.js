@@ -45,6 +45,11 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper('toLowerCase', function(str) {
     return str.toLowerCase();
   });
+
+  Handlebars.registerHelper("axs", function(aString) {
+    return aString.toUpperCase();
+  });
+
 });
 Handlebars.registerHelper('textField', function(options) {
   var attribs;

@@ -17,6 +17,7 @@ export class ShazHackActorSheet extends ActorSheet {
 
   /* -------------------------------------------- */
 
+
   /** @override */
   get template() {
     const path = "systems/shazhack/templates/actor";
@@ -43,6 +44,8 @@ export class ShazHackActorSheet extends ActorSheet {
 
     return data;
   }
+
+  
 
   /**
    * Organize and classify Items for Character sheets.
@@ -96,6 +99,29 @@ export class ShazHackActorSheet extends ActorSheet {
       }
     }
 
+    console.log(actorData.data.abilities.Intuition.value);
+
+    spheres.forEach( function(a) {
+      if(actorData.data.abilities.Intuition.value > actorData.data.abilities.Presence.value) {
+        if (a.data.level == 1) {
+          a.data.reduction = Math.ceil(actorData.data.abilities.Intuition.value / 2) * -1;
+        } else if (a.data.level == 2) {
+          a.data.reduction = actorData.data.abilities.Intuition.value * -1;
+        } else if (a.data.level == 3) {
+          a.data.reduction = (actorData.data.abilities.Intuition.value * -1) - 1;
+        }
+      } else {
+        if (a.data.level == 1) {
+          a.data.reduction = Math.ceil(actorData.data.abilities.Presence.value / 2) * -1;
+        } else if (a.data.level == 2) {
+          a.data.reduction = actorData.data.abilities.Presence.value * -1;
+        } else if (a.data.level == 3) {
+          a.data.reduction = (actorData.data.abilities.Presence.value * -1) - 1;
+        }
+      }
+    })
+
+
     // Assign and return
     actorData.backgrounds = backgrounds;  
     actorData.esoterica = esoterica;
@@ -104,6 +130,8 @@ export class ShazHackActorSheet extends ActorSheet {
     actorData.armour = armour;
     actorData.features = feats;
     actorData.spheres = spheres;
+
+    console.log(actorData.name);
   }
 
   /* -------------------------------------------- */

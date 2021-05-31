@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character","npc"],
+    "types": ["character","npc","hireling","vehicle"],
     "templates": {
       "base": {
         "health": {
@@ -41,7 +41,7 @@
         "Agility": {
           "value": 0
         },
-        "Intution": {
+        "Intuition": {
           "value": 0
         },
         "Presence": {
@@ -118,7 +118,8 @@
     },
     "sphere": {
       "templates": ["base"],
-      "level": 1
+      "level": 1,
+      "reduction": 0
     }
   }
 }
