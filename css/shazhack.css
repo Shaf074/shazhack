@@ -28,8 +28,12 @@
   cursor: pointer;
 }
 
-
-
+.rollable-sphere:hover, .rollable-sphere:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  box-shadow: 0 0 5px red;
+  cursor: pointer;
+}
 
 .rollable-hd:hover, .rollable-hd:focus {
   color: #000;
