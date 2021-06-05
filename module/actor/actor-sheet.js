@@ -336,7 +336,7 @@ export class ShazHackActorSheet extends ActorSheet {
     // console.log(this.actor.items.find(a => a.type == "sphere"));
     var cost = dataset.cost;
      //console.log(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere))
-     if(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere).data.data.reduction != null) {
+     if(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere) != null) {
       var adjustCost = parseInt(cost) + parseInt(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere).data.data.reduction);
      } else {
       var adjustCost = parseInt(cost);
