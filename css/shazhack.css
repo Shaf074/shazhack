@@ -21,6 +21,13 @@
   cursor: pointer;
 }
 
+.rollable-armour:hover, .rollable-armour:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  box-shadow: 0 0 5px red;
+  cursor: pointer;
+}
+
 .rollable-background:hover, .rollable-background:focus {
   color: #000;
   text-shadow: 0 0 10px red;

@@ -65,6 +65,7 @@ export class ShazHackActorSheet extends ActorSheet {
     const armour = [];
     const feats = [];
     const spheres = [];
+    const spells = [];
 
     // Iterate through items, allocating to containers
     // let totalWeight = 0;
@@ -96,6 +97,9 @@ export class ShazHackActorSheet extends ActorSheet {
       // Append to spells.
       else if (i.type === 'sphere') {
         spheres.push(i);
+      }
+      else if (i.type === 'spell') {
+        spells.push(i);
       }
     }
 
@@ -129,6 +133,7 @@ export class ShazHackActorSheet extends ActorSheet {
     actorData.armour = armour;
     actorData.features = feats;
     actorData.spheres = spheres;
+    actorData.spells = spells;
   }
 
   /* -------------------------------------------- */
@@ -167,6 +172,7 @@ export class ShazHackActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
     html.find('.rollable-background').click(this._onRollBackground.bind(this));
+    html.find('.rollable-armour').click(this._onRollArmour.bind(this));
     html.find('.rollable-weapon').click(this._onRollWeapon.bind(this));
     html.find('.rollable-sphere').click(this._onRollSphere.bind(this));
 
@@ -343,6 +349,32 @@ export class ShazHackActorSheet extends ActorSheet {
     });
 
   }
+
+  _onRollArmour(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    var abilityBonus = 0;
+    abilityBonus = this.actor.data.data.abilities.Agility.value;
+   if (this.actor.data.items.find(a => a.name == "Artful Dodger") != null) {
+    abilityBonus *= 2;
+   }
+    if (dataset.roll) {
+      let roll = new Roll("d20+" + abilityBonus);
+      let label = dataset.label ? `Rolling Dodge` : '';
+      roll.roll().toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label
+      });
+      let roll2 = new Roll(dataset.roll, this.actor.data.data);
+      let label2 = dataset.label ? `Rolling ${dataset.label} Die` : '';
+      roll2.roll().toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label2
+      });
+    }
+  }
+
 
   _onRollWeapon(event) {
     event.preventDefault();

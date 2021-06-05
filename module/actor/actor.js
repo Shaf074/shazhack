@@ -51,10 +51,10 @@ export class ShazHackActor extends Actor {
       data.numFeats.value += a.data.data.level;
     });
     var attackFlag = 0;
-    if (feats.includes(a => a.data.name === "Warrior")) {
-      if (feats.find(a => a.data.name === "Warrior").data.data.level == 1) {
+    if (feats.find(a => a.data.name === "Warrior") != null) {
+      if (feats.find(a => a.data.name == "Warrior").data.data.level == 1) {
         attackFlag = 1;
-      } else if (feats.find(a => a.data.name === "Warrior").data.data.level == 2) {
+      } else if (feats.find(a => a.data.name == "Warrior").data.data.level == 2) {
         attackFlag = 2;
       }
     }

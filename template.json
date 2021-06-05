@@ -74,7 +74,7 @@
     }
   },
   "Item": {
-    "types": ["item","equipment","weapon","armour","feat","background","sphere","esoterica"],
+    "types": ["item","equipment","weapon","armour","feat","background","sphere","esoterica", "spell"],
     "templates": {
       "base": {
         "name": "",
@@ -120,6 +120,12 @@
       "templates": ["base"],
       "level": 1,
       "reduction": 0
+    },
+    "spell": {
+      "templates": ["base"],
+      "cost": 0,
+      "sphere": "",
+      "dice":"1d6"
     }
   }
 }
