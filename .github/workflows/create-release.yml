@@ -1,6 +1,6 @@
 on:
-  pull_request:
- # push:
+  #pull_request:
+  push:
     # Sequence of patterns matched against refs/tags    
 name: Create Release and Upload Asset
 
