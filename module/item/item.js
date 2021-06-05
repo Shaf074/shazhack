@@ -13,6 +13,33 @@ export class ShazHackItem extends Item {
     const itemData = this.data;
     const actorData = this.actor ? this.actor.data : {};
     const data = itemData.data;
+
+
+    if (itemData.type == "sphere") {
+      // console.log("Before: " + data.reduction);
+      data.name = itemData.name;
+      if (actorData.data.abilities.Intuition.value > actorData.data.abilities.Presence.value) {
+        if (data.level == 1) {
+          data.reduction = Math.ceil(actorData.data.abilities.Intuition.value / 2) * -1;
+        } else if (data.level == 2) {
+          data.reduction = actorData.data.abilities.Intuition.value * -1;
+        } else if (data.level == 3) {
+          data.reduction = (actorData.data.abilities.Intuition.value * -1) - 1;
+        }
+      } else {
+        if (data.level == 1) {
+          data.reduction = Math.ceil(actorData.data.abilities.Presence.value / 2) * -1;
+        } else if (data.level == 2) {
+          data.reduction = actorData.data.abilities.Presence.value * -1;
+        } else if (data.level == 3) {
+          data.reduction = (actorData.data.abilities.Presence.value * -1) - 1;
+        }
+      }
+      itemData.data = data;
+      // console.log("After: " + data.reduction);
+      // data.reduction = 
+    }
+    this.update(itemData);
   }
 
   /**

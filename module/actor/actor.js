@@ -40,6 +40,11 @@ export class ShazHackActor extends Actor {
     //   // Calculate the modifier using d20 rules.
     //   ability.mod = Math.floor((ability.value));
     // }
+  
+    actorData.items.filter(a => a.type == "sphere").forEach(function (a) {
+      
+    })
+    // console.log(actorData.items.filter(a => a.type == "sphere"));
 
     var totalEnc = 0;
     var allItem = items.filter(word => word.type == "weapon" || word.type == "armour" || word.type == "equipment");

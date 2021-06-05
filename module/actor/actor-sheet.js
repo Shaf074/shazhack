@@ -102,29 +102,6 @@ export class ShazHackActorSheet extends ActorSheet {
         spells.push(i);
       }
     }
-
-
-    spheres.forEach(function (a) {
-      if (actorData.data.abilities.Intuition.value > actorData.data.abilities.Presence.value) {
-        if (a.data.level == 1) {
-          a.data.reduction = Math.ceil(actorData.data.abilities.Intuition.value / 2) * -1;
-        } else if (a.data.level == 2) {
-          a.data.reduction = actorData.data.abilities.Intuition.value * -1;
-        } else if (a.data.level == 3) {
-          a.data.reduction = (actorData.data.abilities.Intuition.value * -1) - 1;
-        }
-      } else {
-        if (a.data.level == 1) {
-          a.data.reduction = Math.ceil(actorData.data.abilities.Presence.value / 2) * -1;
-        } else if (a.data.level == 2) {
-          a.data.reduction = actorData.data.abilities.Presence.value * -1;
-        } else if (a.data.level == 3) {
-          a.data.reduction = (actorData.data.abilities.Presence.value * -1) - 1;
-        }
-      }
-    })
-
-
     // Assign and return
     actorData.backgrounds = backgrounds;
     actorData.esoterica = esoterica;
@@ -175,6 +152,7 @@ export class ShazHackActorSheet extends ActorSheet {
     html.find('.rollable-armour').click(this._onRollArmour.bind(this));
     html.find('.rollable-weapon').click(this._onRollWeapon.bind(this));
     html.find('.rollable-sphere').click(this._onRollSphere.bind(this));
+    html.find('.rollable-spell').click(this._onRollSpell.bind(this));
 
     // Drag events for macros.
     if (this.actor.owner) {
@@ -285,8 +263,7 @@ export class ShazHackActorSheet extends ActorSheet {
         <div class="form-group flexrow">
           <label>Select Attribute:</label>
           <select name="attribute-select" id="attribute-select">
-            <option value="Intuition">Intuition</option>
-            <option value="Presence">Presence</option>
+            <option value="Roll">Roll</option>
             <option value="NoRoll">No Roll</option>
           </select>
         </div>
@@ -321,7 +298,8 @@ export class ShazHackActorSheet extends ActorSheet {
       label: "OK",
       callback: (html) => {
         if (html.find('[id=attribute-select]')[0].value != "NoRoll") {
-          var abilityBonus = this.actor.data.data.abilities[html.find('[id=attribute-select]')[0].value].value;
+          var abilityBonus = Math.max(this.actor.data.data.abilities.Presence.value,this.actor.data.data.abilities.Intuition.value);
+          // console.log(abilityBonus);
           let roll = new Roll("d20+" + abilityBonus, this.actor.data.data);
           let label = dataset.label ? `Rolling ${dataset.label} Spell` : '';
           roll.roll().toMessage({
@@ -348,6 +326,42 @@ export class ShazHackActorSheet extends ActorSheet {
       }
     });
 
+  }
+
+  _onRollSpell(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    var abilityBonus = 0;
+    // console.log(this.actor.items.find(a => a.type == "sphere"));
+    var cost = dataset.cost;
+     //console.log(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere))
+     var adjustCost = parseInt(cost) + parseInt(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere).data.data.reduction);
+    
+    if (cost > 0 && adjustCost <= 0) {
+      adjustCost = 1;
+    } else if (cost == 0) {
+      adjustCost = 0;
+    }
+    // console.log(adjustCost);
+    var abilityBonus = Math.max(this.actor.data.data.abilities.Presence.value, this.actor.data.data.abilities.Intuition.value)
+    let roll = new Roll("d20+" + abilityBonus, this.actor.data.data);
+    let label = dataset.label ? `Rolling ${dataset.label} Spell` : '';
+    roll.roll().toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: label
+    });
+    ChatMessage.create({
+      speaker: { alias: this.actor.name },
+      content: "This costs " + adjustCost + " hit point(s) to cast.",
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+    });
+    let roll2 = new Roll(dataset.roll, this.actor.data.data);
+    let label2 = dataset.label ? `Rolling ${dataset.label} Dice` : '';
+    roll2.roll().toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: label2
+    });
   }
 
   _onRollArmour(event) {

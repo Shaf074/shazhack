@@ -125,7 +125,8 @@
       "templates": ["base"],
       "cost": 0,
       "sphere": "",
-      "dice":"1d6"
+      "dice":"1d6",
+      "roll": false
     }
   }
 }
