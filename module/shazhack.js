@@ -1,8 +1,34 @@
 // Import Modules
-import { ShazHackActor } from "./actor/actor.js";
-import { ShazHackActorSheet } from "./actor/actor-sheet.js";
-import { ShazHackItem } from "./item/item.js";
-import { ShazHackItemSheet } from "./item/item-sheet.js";
+import { ShazHackActor } from "./actor.js";
+import { ShazHackActorSheet } from "./sheets/actor-sheet.js";
+import { ShazHackItem } from "./item.js";
+import { ShazHackItemSheet } from "./sheets/item-sheet.js";
+
+import {SHAZHACK} from "./helpers/config.js";
+
+async function preloadHandlebarsTemplates() {
+  const templatePaths = [
+    "systems/shazhack/templates/partials/character-header.hbs",
+    "systems/shazhack/templates/partials/description-sheet.hbs",
+    "systems/shazhack/templates/partials/feats-sheet.hbs",
+    "systems/shazhack/templates/partials/items-sheet.hbs",
+    "systems/shazhack/templates/partials/spheres-sheet.hbs",
+    "systems/shazhack/templates/partials/header-partials/attackbonus-partial.hbs",
+    "systems/shazhack/templates/partials/header-partials/attributes-partial.hbs",
+    "systems/shazhack/templates/partials/header-partials/encumbrance-partial.hbs",
+    "systems/shazhack/templates/partials/header-partials/hitdice-partial.hbs",
+    "systems/shazhack/templates/partials/header-partials/hitpoints-partial.hbs",
+    "systems/shazhack/templates/partials/item-partials/armour-partial.hbs",
+    "systems/shazhack/templates/partials/item-partials/equipment-partial.hbs",
+    "systems/shazhack/templates/partials/item-partials/weapons-partial.hbs",
+    "systems/shazhack/templates/partials/sphere-partials/sphere-partial.hbs",
+    "systems/shazhack/templates/partials/sphere-partials/spell-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/backgrounds-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/esoterica-partial.hbs"
+  ];
+
+  return loadTemplates(templatePaths);
+}
 
 Hooks.once('init', async function() {
 
@@ -11,6 +37,8 @@ Hooks.once('init', async function() {
     ShazHackItem,
     rollItemMacro
   };
+
+  CONFIG.SHAZHACK = SHAZHACK;
 
   /**
    * Set an initiative formula for the system
@@ -49,7 +77,7 @@ Hooks.once('init', async function() {
   Handlebars.registerHelper("axs", function(aString) {
     return aString.toUpperCase();
   });
-
+  preloadHandlebarsTemplates();
 });
 Handlebars.registerHelper('textField', function(options) {
   var attribs;
@@ -60,6 +88,7 @@ Handlebars.registerHelper('textField', function(options) {
 Hooks.once("ready", async function() {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createShazHackMacro(data, slot));
+  
 });
 
 /* -------------------------------------------- */

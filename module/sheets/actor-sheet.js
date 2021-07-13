@@ -1,0 +1,509 @@
+
+/**
+ * Extend the basic ActorSheet with some very simple modifications
+ * @extends {ActorSheet}
+ */
+export class ShazHackActorSheet extends ActorSheet {
+
+  /** @override */
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      classes: ["shazhack", "sheet", "actor"],
+      template: "systems/shazhack/templates/character-sheet.hbs",
+      width: 640,
+      height: 665,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
+      resizable: false,
+      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }]
+    });
+  }
+
+  /* -------------------------------------------- */
+
+
+  /** @override */
+  get template() {
+    const path = "systems/shazhack/templates";
+    // Return a single sheet for all item types.
+    // return `${path}/item-sheet.html`;
+
+    // Alternatively, you could use the following return statement to do a
+    // unique item sheet by type, like `weapon-sheet.html`.
+    //return `${path}/actor-${this.actor.data.type}-sheet.html`;
+    return `${path}/character-sheet.hbs`;
+  }
+
+  /** @override */
+  getData() {
+    // Retrieve the data structure from the base sheet. You can inspect or log
+    // the context variable to see the structure, but some key properties for
+    // sheets are the actor object, the data object, whether or not it's
+    // editable, the items array, and the effects array.
+    const context = super.getData();
+
+    // Use a safe clone of the actor data for further operations.
+    const actorData = context.actor.data;
+
+
+    // Add the actor's data to context.data for easier access, as well as flags.
+    context.data = actorData.data;
+    context.flags = actorData.flags;
+
+    // Prepare items.
+    if (actorData.type == 'Character') {
+      this._prepareCharacterItems(context);
+      this._prepareCharacterData(context);
+    }
+
+    // Prepare NPC data and items.
+    if (actorData.type == 'NPC') {
+      this._prepareCharacterItems(context);
+    }
+
+    // Add roll data for TinyMCE editors.
+    context.rollData = context.actor.getRollData();
+
+    return context;
+  }
+
+  _prepareCharacterData(context) {
+    // Handle ability scores.
+    for (let [k, v] of Object.entries(context.data.attributes)) {
+      v.label = game.i18n.localize(CONFIG.SHAZHACK.attributes[k]) ?? k;
+    }
+  }
+
+  /**
+   * Organize and classify Items for Character sheets.
+   *
+   * @param {Object} actorData The actor to prepare.
+   *
+   * @return {undefined}
+   */
+  _prepareCharacterItems(context) {
+
+    // Initialize containers.
+    const esoterica = [];
+    const backgrounds = [];
+    const equipment = [];
+    const weapons = [];
+    const armour = [];
+    const feats = [];
+    const spheres = [];
+    const spells = [];
+
+    // Iterate through items, allocating to containers
+    // let totalWeight = 0;
+
+    for (let i of context.items) {
+      i.img = i.img || DEFAULT_TOKEN;
+      // Append to backgrounds.
+      if (i.type === 'Background') {
+        backgrounds.push(i);
+      }
+
+      if (i.type === 'Esoterica') {
+        esoterica.push(i);
+      }
+      // Append to gear.
+      if (i.type === 'Equipment') {
+        equipment.push(i);
+      }
+      if (i.type === 'Weapon') {
+        weapons.push(i);
+      }
+      if (i.type === 'Armour') {
+        armour.push(i);
+      }
+      // Append to features.
+      else if (i.type === 'Feat') {
+        feats.push(i);
+      }
+      // Append to spells.
+      else if (i.type === 'Sphere') {
+        spheres.push(i);
+      }
+      else if (i.type === 'Spell') {
+        spells.push(i);
+      }
+    }
+    // Assign and return
+    context.backgrounds = backgrounds;
+    context.esoterica = esoterica;
+    context.equipment = equipment;
+    context.weapons = weapons;
+    context.armour = armour;
+    context.feats = feats;
+    context.spheres = spheres;
+    context.spells = spells;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Render the item sheet for viewing/editing prior to the editable check.
+    html.find('.item-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.sheet.render(true);
+    });
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return;
+
+    //edit attributes
+    html.find('.ability-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.sheet.render(true);
+    });
+
+    // Add Inventory Item
+    html.find('.item-create').click(this._onItemCreate.bind(this));
+
+    // Delete Inventory Item
+    html.find('.item-delete').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.delete();
+      li.slideUp(200, () => this.render(false));
+    });
+
+    // Rollable attributes.
+    html.find('.rollable').click(this._onRoll.bind(this));
+    html.find('.rollable-background').click(this._onRollBackground.bind(this));
+    html.find('.rollable-armour').click(this._onRollArmour.bind(this));
+    html.find('.rollable-weapon').click(this._onRollWeapon.bind(this));
+    html.find('.rollable-sphere').click(this._onRollSphere.bind(this));
+    html.find('.rollable-spell').click(this._onRollSpell.bind(this));
+
+    // Drag events for macros.
+    if (this.actor.isOwner) {
+      let handler = ev => this._onDragStart(ev);
+      html.find('li.item').each((i, li) => {
+        if (li.classList.contains("inventory-header")) return;
+        li.setAttribute("draggable", true);
+        li.addEventListener("dragstart", handler, false);
+      });
+    }
+  }
+
+  /**
+   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
+   * @param {Event} event   The originating click event
+   * @private
+   */
+
+  async _onItemCreate(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    // Get the type of item to create.
+    const type = header.dataset.type;
+    // Grab any data associated with this control.
+    const data = duplicate(header.dataset);
+    // Initialize a default name.
+    const name = `New ${type.capitalize()}`;
+    // Prepare the item object.
+    const itemData = {
+      name: name,
+      type: type,
+      data: data
+    };
+    // Remove the type from the dataset since it's in the itemData.type prop.
+    delete itemData.data["type"];
+
+    // Finally, create the item!
+    return await Item.create(itemData, { parent: this.actor });
+  }
+
+
+
+
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+
+  _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+
+    // Handle item rolls.
+    if (dataset.rollType) {
+      if (dataset.rollType == 'item') {
+        const itemId = element.closest('.item').dataset.itemId;
+        const item = this.actor.items.get(itemId);
+        if (item) return item.roll();
+      }
+    }
+
+    // Handle rolls that supply the formula directly.
+    if (dataset.roll) {
+      let label = dataset.label ? `[ability] ${dataset.label}` : '';
+      let roll = new Roll(dataset.roll, this.actor.getRollData()).roll();
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label,
+        rollMode: game.settings.get('core', 'rollMode'),
+      });
+      return roll;
+    }
+  }
+
+
+
+  /*  _onRoll(event) {
+     event.preventDefault();
+     const element = event.currentTarget;
+     const dataset = element.dataset;
+ 
+     if (dataset.roll) {
+       let roll = new Roll(dataset.roll, this.actor.data.data);
+       let label = dataset.label ? `Rolling ${dataset.label}` : '';
+       roll.roll().toMessage({
+         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+         flavor: label
+       });
+     }
+   } */
+
+  _onRollBackground(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let d = Dialog.prompt({
+      title: "Choose Attribute:",
+      content: `
+      <form>
+        <div class="form-group">
+          <label>Input text</label>
+          <select name="attribute-select" id="attribute-select">
+            <option value="Physique">Physique</option>
+            <option value="Agility">Agility</option>
+            <option value="Intuition">Intuition</option>
+            <option value="Presence">Presence</option>
+          </select>
+        </div>
+      </form>`,
+      label: "OK",
+      callback: (html) => {
+        if (dataset.roll) {
+          let roll = new Roll(dataset.roll + "+" + this.actor.data.data.attributes[html.find('[id=attribute-select]')[0].value].value, this.actor.data.data);
+          let label = dataset.label ? `Rolling ${dataset.label}` : '';
+          roll.roll().toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: label
+          });
+        }
+      }
+    });
+  }
+
+  _onRollSphere(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let d = Dialog.prompt({
+      title: "Choose Attribute:",
+      content: `
+      <form>
+        <div class="form-group flexrow">
+          <label>Select Attribute:</label>
+          <select name="attribute-select" id="attribute-select">
+            <option value="Roll">Roll</option>
+            <option value="NoRoll">No Roll</option>
+          </select>
+        </div>
+        <div class="form-group flexrow">
+          <label>Size/Distance:</label>
+          <select name="sizedistance-select" id="sizedistance-select">
+            <option value=0 >Single Target/Short Range</option>
+            <option value=1>Small Effect Area/Medium Range</option>
+            <option value=2>Moderate Effect Area/Long Range</option>
+            <option value=4>Large Effect Area/Very Long Range</option>
+          </select>
+        </div>
+        <div class="form-group flexrow">
+          <label>Duration:</label>
+          <select name="duration-select" id="duration-select">
+            <option value=0 >Instant</option>
+            <option value=1>Short</option>
+            <option value=2>Medium</option>
+            <option value=4>Long</option>
+          </select>
+        </div>
+        <div class="form-group flexrow">
+          <label>Potency:</label>
+          <select name="potency-select" id="potency-select">
+            <option value=0 >Minimal</option>
+            <option value=2>Minor</option>
+            <option value=4>Moderate</option>
+            <option value=6>Major</option>
+          </select>
+        </div>
+      </form>`,
+      label: "OK",
+      callback: (html) => {
+        if (html.find('[id=attribute-select]')[0].value != "NoRoll") {
+          var abilityBonus = Math.max(this.actor.data.data.attributes.Presence.value, this.actor.data.data.attributes.Intuition.value);
+          let roll = new Roll("d20+" + abilityBonus, this.actor.data.data);
+          let label = dataset.label ? `Rolling ${dataset.label} Spell` : '';
+          roll.roll().toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: label
+          });
+        }
+        var cost = parseInt(html.find('[id=sizedistance-select]')[0].value) +
+          parseInt(html.find('[id=duration-select]')[0].value) +
+          parseInt(html.find('[id=potency-select]')[0].value) +
+          parseInt(dataset.reduction);
+          console.log(dataset);
+        if (cost <= 0) {
+          if (parseInt(html.find('[id=sizedistance-select]')[0].value) == 0 && parseInt(html.find('[id=duration-select]')[0].value) == 0 && parseInt(html.find('[id=potency-select]')[0].value) == 0) {
+            cost = 0
+          } else {
+            cost = 1;
+          }
+        }
+        ChatMessage.create({
+          speaker: { alias: this.actor.name },
+          content: "This costs " + cost + " hit point(s) to cast. ",
+          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        });
+      }
+    });
+
+  }
+
+  _onRollSpell(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    var abilityBonus = 0;
+    // console.log(this.actor.items.find(a => a.type == "sphere"));
+    var cost = dataset.cost;
+    //console.log(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere))
+    if (this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere) != null) {
+      var adjustCost = parseInt(cost) + parseInt(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere).data.data.reduction);
+    } else {
+      var adjustCost = parseInt(cost);
+    }
+
+    if (cost > 0 && adjustCost <= 0) {
+      adjustCost = 1;
+    } else if (cost == 0) {
+      adjustCost = 0;
+    }
+    // console.log(adjustCost);
+    var abilityBonus = Math.max(this.actor.data.data.attributes.Presence.value, this.actor.data.data.attributes.Intuition.value)
+    let roll = new Roll("d20+" + abilityBonus, this.actor.data.data);
+    let label = dataset.label ? `Rolling ${dataset.label} Spell` : '';
+    roll.roll().toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: label
+    });
+    ChatMessage.create({
+      speaker: { alias: this.actor.name },
+      content: "This costs " + adjustCost + " hit point(s) to cast.",
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+    });
+    let roll2 = new Roll(dataset.roll, this.actor.data.data);
+    let label2 = dataset.label ? `Rolling ${dataset.label} Dice` : '';
+    roll2.roll().toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: label2
+    });
+  }
+
+  _onRollArmour(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    var abilityBonus = 0;
+    abilityBonus = this.actor.data.data.attributes.Agility.value;
+    if (this.actor.data.items.find(a => a.name == "Artful Dodger") != null) {
+      abilityBonus *= 2;
+    }
+    if (dataset.roll) {
+      let roll = new Roll("d20+" + abilityBonus);
+      let label = dataset.label ? `Rolling Dodge` : '';
+      roll.roll().toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label
+      });
+      let roll2 = new Roll(dataset.roll, this.actor.data.data);
+      let label2 = dataset.label ? `Rolling ${dataset.label} Die` : '';
+      roll2.roll().toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label2
+      });
+    }
+  }
+
+
+  _onRollWeapon(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    var abilityBonus = 0;
+    if (dataset.type == "Light") {
+
+      let d = Dialog.prompt({
+        title: "Choose Attribute:",
+        content: `
+        <form>
+          <div class="form-group">
+            <label>Select Attribute:</label>
+            <select name="attribute-select" id="attribute-select">
+              <option value="Physique">Physique</option>
+              <option value="Agility">Agility</option>
+
+            </select>
+          </div>
+        </form>`,
+        label: "OK",
+        callback: (html) => {
+
+          abilityBonus = this.actor.data.data.attributes[html.find('[id=attribute-select]')[0].value].value;
+          if (dataset.roll) {
+            let roll = new Roll("d20+" + abilityBonus + "+" + this.actor.data.data.combat.attack.value, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label} Attack` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
+            let roll2 = new Roll(dataset.roll, this.actor.data.data);
+            let label2 = dataset.label ? `Rolling ${dataset.label} Damage` : '';
+            roll2.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label2
+            });
+          }
+        }
+      });
+
+
+    } else {
+      abilityBonus = this.actor.data.data.attributes.Physique.value;
+      if (dataset.roll) {
+        let roll = new Roll("d20+" + abilityBonus + "+" + this.actor.data.data.combat.attack.value, this.actor.data.data);
+        let label = dataset.label ? `Rolling ${dataset.label} Attack` : '';
+        roll.roll().toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label
+        });
+        let roll2 = new Roll(dataset.roll, this.actor.data.data);
+        let label2 = dataset.label ? `Rolling ${dataset.label} Damage` : '';
+        roll2.roll().toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label2
+        });
+      }
+    }
+  }
+}

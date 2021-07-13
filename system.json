@@ -2,15 +2,46 @@
   "name": "shazhack",
   "title": "ShaZHacK",
   "description": "ShaZHacK system for FoundryVTT!",
-  "version": "1.0.6",
-  "minimumCoreVersion": "0.7.5",
-  "compatibleCoreVersion": "0.7.10",
+  "version": "2.0.0",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.8",
   "templateVersion": 2,
   "author": "Shazza Razza",
   "esmodules": ["module/shazhack.js"],
   "styles": ["css/shazhack.css"],
   "scripts": [],
-  "packs": [],
+  "packs": [
+    {
+      "name": "armour",
+      "label": "Armour",
+      "path": "/packs/armour.db",
+      "entity": "Item"
+    },
+    {
+      "name": "equipment",
+      "label": "Equipment",
+      "path": "/packs/equipment.db",
+      "entity": "Item"
+    },
+    {
+      "name": "weapons",
+      "label": "Weapons",
+      "path": "/packs/weapons.db",
+      "entity": "Item"
+    },
+    {
+      "name": "spheres",
+      "label": "Spheres",
+      "path": "/packs/spheres.db",
+      "entity": "Item"
+    },
+    {
+      "name": "feats",
+      "label": "Feats",
+      "path": "/packs/feats.db",
+      "entity": "Item"
+    }
+  ],
   "languages": [
     {
       "lang": "en",
@@ -18,12 +49,12 @@
       "path": "lang/en.json"
     }
   ],
-  "socket": false,
+  "socket": true,
   "initiative": "1d4",
   "gridDistance": 1.5,
   "gridUnits": "m",
-  "primaryTokenAttribute": "base.health",
-  "secondaryTokenAttribute": "base.hit-dice",
+  "primaryTokenAttribute": "hitPoints",
+  "secondaryTokenAttribute": "hitDice",
   "url": "https://github.com/Shaf074/shazhack",
   "manifest": "https://raw.githubusercontent.com/Shaf074/shazhack/main/system.json",
   "download": "https://github.com/Shaf074/shazhack/releases/download/v1.0.6/shazhack-main.zip",

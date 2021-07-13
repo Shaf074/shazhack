@@ -1,0 +1,12 @@
+<div class="attributes flexcol">
+  {{#each data.attributes as |ability key|}}
+  <div class="ability flexrow flex-group-center">
+    <label for="data.attributes.{{key}}.value" class="resource-label flexlarge align-left"
+      data-roll="d20+@attributes.{{key}}.value" data-label="{{ability.label}}">{{ability.label}}</label>
+    <img class="roll-img rollable" src="icons/svg/d20-highlight.svg" title="{{@key}}"
+      data-roll="d20+@attributes.{{key}}.value" data-label="{{ability.label}}" />
+    <input type="text" class="resource-input" name="data.attributes.{{key}}.value" value="{{ability.value}}"
+      data-dtype="Number" />
+  </div>
+  {{/each}}
+</div>

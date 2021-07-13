@@ -1,0 +1,10 @@
+<div class="resource-content flexrow flex-center flex-between">
+  <label for="data.hitDice.value" class="resource-label">Hit Dice:</label>
+  <img class="roll-img rollable" src="icons/svg/d20-highlight.svg" data-label="Hit Dice"
+    title="{{actor.data.data.hitDice}}" data-roll="d6" />
+  <input class="resource-input" type="text" name="data.hitDice.value" value="{{actor.data.data.hitDice.value}}"
+    data-dtype="Number" />
+  <span>/</span>
+  <input type="text" class="resource-input" readonly name="data.hitDice.max" value="{{actor.data.data.hitDice.max}}"
+    data-dtype="Number" />
+</div>
