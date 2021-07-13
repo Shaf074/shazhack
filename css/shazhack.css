@@ -5,7 +5,7 @@
 }
 
 .shazhack .window-content {
-  background:  url("../page.png");
+  background:  url("../assets/page.png");
 }
 .rollable:hover, .rollable:focus {
   color: #000;

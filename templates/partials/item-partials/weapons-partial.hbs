@@ -1,0 +1,32 @@
+<label class="resource-label">Weapons</label>
+<ol class="items-list">
+  <li class="item flexrow item-header">
+    <div class="item-image"></div>
+    <div class="item-image"></div>
+    <div class="item-name-weapon">Name</div>
+    <div class="item-name-weapon" text-align: right>Weapon Tags</div>
+    <div class="item-name-level" text-align: right>Type</div>
+    <div class="item-name-level" text-align: right>Damage</div>
+    <div class="item-name-level" text-align: right>Enc.</div>
+    <div class="item-controls">
+      <a class="item-control item-create" title="Create item" data-type="Weapon"><i class="fas fa-plus"></i> Add
+      </a>
+    </div>
+  </li>
+  {{#each weapons as |item id|}}
+  <li class="item flexrow" data-item-id="{{item._id}}">
+    <img class="item-image rollable-weapon" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24"
+      height="24" data-label="{{item.name}}" data-roll="{{item.data.damage}}" data-type="{{item.data.type}}" />
+    <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
+    <h4 class="item-name-weapon">{{item.name}}</h4>
+    <h4 class="item-name-weapon" text-align: right>{{item.data.weaponTags}}</h4>
+    <h4 class="item-name-level" text-align: right>{{item.data.type}}</h4>
+    <h4 class="item-name-level" text-align: right>{{item.data.damage}}</h4>
+    <h4 class="item-name-level" text-align: right>{{item.data.encumbrance}}</h4>
+    <div class="item-controls">
+      <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+      <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+    </div>
+  </li>
+  {{/each}}
+</ol>

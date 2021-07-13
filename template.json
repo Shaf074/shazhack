@@ -1,40 +1,92 @@
 {
   "Actor": {
-    "types": ["character","npc","hireling","vehicle"],
+    "types": [
+      "Character",
+      "NPC",
+      "character",
+      "npc"
+    ],
     "templates": {
       "base": {
-        "health": {
-          "value": 4,
+        "hitPoints": {
+          "value": 0,
           "min": 0,
-          "max": 4
+          "max": 0
         },
         "hitDice": {
           "value": 1,
           "min": 0,
           "max": 1
+        },
+        "notes": ""
+      }
+    },
+    "Character": {
+      "templates": [
+        "base"
+      ],
+      "biography": "",
+      "money": 0,
+      "encumbrance": {
+        "value": 0,
+        "min": 0,
+        "max": 0
+      },
+      "attributes": {
+        "Physique": {
+          "value": 0
+        },
+        "Agility": {
+          "value": 0
+        },
+        "Intuition": {
+          "value": 0
+        },
+        "Presence": {
+          "value": 0
+        }
+      },
+      "combat": {
+        "dodge": {
+          "value": 0
+        },
+        "attack": {
+          "value": 0
+        }
+      }
+    },
+    "NPC": {
+      "templates": [
+        "base"
+      ],
+      "biography": "",
+      "level": {
+        "value": 1
+      },
+      "attributes": {
+        "Physique": {
+          "value": 0
+        },
+        "Agility": {
+          "value": 0
+        },
+        "Intuition": {
+          "value": 0
+        },
+        "Presence": {
+          "value": 0
         }
       }
     },
     "character": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "biography": "",
-      "numFeats": {
-        "value": 5
-      },
-      "currency":0,
-      "attackBonus": {
+      "level": {
         "value": 1
       },
-      "armourDie": {
-        "value": "0"
-      },
-      "backgrounds": {},
-      "encumbrance": {
-        "value": 1,
-        "min": 0,
-        "max": 10
-      },
-      "abilities": {
+      "attributes": {
         "Physique": {
           "value": 0
         },
@@ -50,83 +102,135 @@
       }
     },
     "npc": {
-      "templates": ["base"],
+      "templates": [
+        "base"
+      ],
       "biography": "",
-      "attributes": {
-        "level": {
-          "value": 1
-        }
+      "level": {
+        "value": 1
       },
-      "abilities": {
-        "phys": {
+      "attributes": {
+        "Physique": {
           "value": 0
         },
-        "agil": {
+        "Agility": {
           "value": 0
         },
-        "intu": {
+        "Intuition": {
           "value": 0
         },
-        "pres": {
+        "Presence": {
           "value": 0
         }
       }
     }
   },
   "Item": {
-    "types": ["item","equipment","weapon","armour","feat","background","sphere","esoterica", "spell"],
+    "types": [
+      "Item",
+      "Equipment",
+      "Weapon",
+      "Armour",
+      "Feat",
+      "Background",
+      "Sphere",
+      "Esoterica",
+      "Spell",
+      "item",
+      "equipment",
+      "weapon",
+      "armour",
+      "feat",
+      "background",
+      "sphere",
+      "esoterica",
+      "spell"
+    ],
     "templates": {
-      "base": {
-        "name": "",
-        "description": ""
-      },
-      "item-base": {
+      "itemBase": {
+        "description": "",
         "cost": 0,
-        "encumbrance": 1,
-        "quantity": 1
+        "encumbrance": 0
       }
     },
-    "item": {
-      "templates": ["base", "item-base"]
+    "Item": {
+      "templates": [
+        "itemBase"
+      ]
     },
-    "equipment": {
-      "templates": ["base", "item-base"],
-      "usage": ""
+    "Equipment": {
+      "templates": [
+        "itemBase"
+      ],
+      "usageDie": "1d6"
     },
-    "weapon": {
-      "templates": ["base", "item-base"],
-      "damage": "",
-      "type" : "",
+    "Weapon": {
+      "templates": [
+        "itemBase"
+      ],
+      "damageDie": "1d6",
+      "type": "",
       "weaponTags": ""
     },
-    "armour": {
-      "templates": ["base", "item-base"],
+    "Armour": {
+      "templates": [
+        "itemBase"
+      ],
       "type": "",
-      "armourDie": "0"
+      "armourDie": "1"
     },
-    "feat": {
-      "templates": ["base"],
+    "Feat": {
       "level": 1,
-      "choice": ""
+      "choice": "",
+      "description": ""
+    },
+    "Background": {
+      "level": 1,
+      "description": ""
+    },
+    "Esoterica": {
+      "description": ""
+    },
+    "Sphere": {
+      "attributeUsed": "",
+      "level": 1,
+      "costReduction": 0,
+      "description": ""
+    },
+    "Spell": {
+      "cost": 0,
+      "attributeUsed": "",
+      "sphere": "",
+      "dice": "1d6",
+      "roll": false
+    },
+    "item": {
+      "value": 0
+    },
+    "equipment": {
+      "value": 0
+    },
+    "weapon": {
+      "value": 0
+    },
+    "armour": {
+      "value": 0
     },
     "background": {
-      "templates": ["base"],
-      "level": 1
+      "value": 0
     },
     "esoterica": {
-      "templates": ["base"]
+      "value": 0
     },
     "sphere": {
-      "templates": ["base"],
-      "level": 1,
-      "reduction": 0
+      "value": 0
     },
     "spell": {
-      "templates": ["base"],
-      "cost": 0,
-      "sphere": "",
-      "dice":"1d6",
-      "roll": false
+      "value": 0
+    }
+    ,
+    "feat": {
+      "value": 0
     }
   }
 }
