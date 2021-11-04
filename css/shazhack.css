@@ -42,6 +42,13 @@
   cursor: pointer;
 }
 
+.rollable-attribute:hover, .rollable-attribute:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  box-shadow: 0 0 5px red;
+  cursor: pointer;
+}
+
 .rollable-sphere:hover, .rollable-sphere:focus {
   color: #000;
   text-shadow: 0 0 10px red;
@@ -176,8 +183,8 @@
 
 .shazhack .sheet-header {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 200px;
-  flex: 0 0 260px;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;

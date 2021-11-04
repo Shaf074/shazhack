@@ -2,45 +2,20 @@
   "name": "shazhack",
   "title": "ShaZHacK",
   "description": "ShaZHacK system for FoundryVTT!",
-  "version": "2.0.0",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.8",
-  "templateVersion": 2,
   "author": "Shazza Razza",
-  "esmodules": ["module/shazhack.js"],
-  "styles": ["css/shazhack.css"],
+  "authors": [],
+  "url": "https://github.com/Shaf074/shazhack",
+  "license": "LICENSE.txt",
+  "flags": {},
+  "version": "v3.0.0",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.9",
   "scripts": [],
-  "packs": [
-    {
-      "name": "armour",
-      "label": "Armour",
-      "path": "/packs/armour.db",
-      "entity": "Item"
-    },
-    {
-      "name": "equipment",
-      "label": "Equipment",
-      "path": "/packs/equipment.db",
-      "entity": "Item"
-    },
-    {
-      "name": "weapons",
-      "label": "Weapons",
-      "path": "/packs/weapons.db",
-      "entity": "Item"
-    },
-    {
-      "name": "spheres",
-      "label": "Spheres",
-      "path": "/packs/spheres.db",
-      "entity": "Item"
-    },
-    {
-      "name": "feats",
-      "label": "Feats",
-      "path": "/packs/feats.db",
-      "entity": "Item"
-    }
+  "esmodules": [
+    "module/shazhack.js"
+  ],
+  "styles": [
+    "css/shazhack.css"
   ],
   "languages": [
     {
@@ -49,14 +24,52 @@
       "path": "lang/en.json"
     }
   ],
+  "packs": [
+    {
+      "name": "armour",
+      "label": "Armour",
+      "path": "/packs/armour.db",
+      "entity": "Item",
+      "private": false
+    },
+    {
+      "name": "equipment",
+      "label": "Equipment",
+      "path": "/packs/equipment.db",
+      "entity": "Item",
+      "private": false
+    },
+    {
+      "name": "weapons",
+      "label": "Weapons",
+      "path": "/packs/weapons.db",
+      "entity": "Item",
+      "private": false
+    },
+    {
+      "name": "spheres",
+      "label": "Spheres",
+      "path": "/packs/spheres.db",
+      "entity": "Item",
+      "private": false
+    },
+    {
+      "name": "feats",
+      "label": "Feats",
+      "path": "/packs/feats.db",
+      "entity": "Item",
+      "private": false
+    }
+  ],
+  "system": [],
+  "dependencies": [],
   "socket": true,
+  "manifest": "https://raw.githubusercontent.com/Shaf074/shazhack/main/system.json",
+  "download": "https://github.com/Shaf074/shazhack/releases/download/v2.0.0/shazhack-main.zip",
+  "protected": false,
   "initiative": "1d4",
   "gridDistance": 1.5,
   "gridUnits": "m",
   "primaryTokenAttribute": "hitPoints",
-  "secondaryTokenAttribute": "hitDice",
-  "url": "https://github.com/Shaf074/shazhack",
-  "manifest": "https://raw.githubusercontent.com/Shaf074/shazhack/main/system.json",
-  "download": "https://github.com/Shaf074/shazhack/releases/download/v2.0.0/shazhack-main.zip",
-  "license": "LICENSE.txt"
+  "secondaryTokenAttribute": "hitDice"
 }

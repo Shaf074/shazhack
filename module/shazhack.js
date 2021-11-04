@@ -8,11 +8,11 @@ import {SHAZHACK} from "./helpers/config.js";
 
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
-    "systems/shazhack/templates/partials/character-header.hbs",
-    "systems/shazhack/templates/partials/description-sheet.hbs",
-    "systems/shazhack/templates/partials/feats-sheet.hbs",
-    "systems/shazhack/templates/partials/items-sheet.hbs",
-    "systems/shazhack/templates/partials/spheres-sheet.hbs",
+    "systems/shazhack/templates/partials/character-partials/character-header.hbs",
+    "systems/shazhack/templates/partials/character-partials/background-sheet.hbs",
+    "systems/shazhack/templates/partials/character-partials/feats-sheet.hbs",
+    "systems/shazhack/templates/partials/character-partials/items-sheet.hbs",
+    "systems/shazhack/templates/partials/character-partials/spheres-sheet.hbs",
     "systems/shazhack/templates/partials/header-partials/attackbonus-partial.hbs",
     "systems/shazhack/templates/partials/header-partials/attributes-partial.hbs",
     "systems/shazhack/templates/partials/header-partials/encumbrance-partial.hbs",
@@ -23,8 +23,13 @@ async function preloadHandlebarsTemplates() {
     "systems/shazhack/templates/partials/item-partials/weapons-partial.hbs",
     "systems/shazhack/templates/partials/sphere-partials/sphere-partial.hbs",
     "systems/shazhack/templates/partials/sphere-partials/spell-partial.hbs",
-    "systems/shazhack/templates/partials/character-partials/backgrounds-partial.hbs",
-    "systems/shazhack/templates/partials/character-partials/esoterica-partial.hbs"
+    "systems/shazhack/templates/partials/background-partials/backgrounds-partial.hbs",
+    "systems/shazhack/templates/partials/background-partials/esoterica-partial.hbs",
+    "systems/shazhack/templates/partials/background-partials/languages-partial.hbs",
+    "systems/shazhack/templates/partials/npc-partials/npc-header.hbs",
+    "systems/shazhack/templates/partials/npc-partials/background-sheet.hbs",
+    "systems/shazhack/templates/partials/npc-partials/feats-sheet.hbs",
+    "systems/shazhack/templates/partials/npc-partials/items-sheet.hbs"
   ];
 
   return loadTemplates(templatePaths);

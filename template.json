@@ -2,9 +2,10 @@
   "Actor": {
     "types": [
       "Character",
-      "NPC",
-      "character",
-      "npc"
+      "Hireling",
+      "Stronghold",
+      "Vehicle",
+      "NPC"
     ],
     "templates": {
       "base": {
@@ -77,52 +78,6 @@
           "value": 0
         }
       }
-    },
-    "character": {
-      "templates": [
-        "base"
-      ],
-      "biography": "",
-      "level": {
-        "value": 1
-      },
-      "attributes": {
-        "Physique": {
-          "value": 0
-        },
-        "Agility": {
-          "value": 0
-        },
-        "Intuition": {
-          "value": 0
-        },
-        "Presence": {
-          "value": 0
-        }
-      }
-    },
-    "npc": {
-      "templates": [
-        "base"
-      ],
-      "biography": "",
-      "level": {
-        "value": 1
-      },
-      "attributes": {
-        "Physique": {
-          "value": 0
-        },
-        "Agility": {
-          "value": 0
-        },
-        "Intuition": {
-          "value": 0
-        },
-        "Presence": {
-          "value": 0
-        }
-      }
     }
   },
   "Item": {
@@ -135,16 +90,8 @@
       "Background",
       "Sphere",
       "Esoterica",
-      "Spell",
-      "item",
-      "equipment",
-      "weapon",
-      "armour",
-      "feat",
-      "background",
-      "sphere",
-      "esoterica",
-      "spell"
+      "Spell", 
+      "Language"  
     ],
     "templates": {
       "itemBase": {
@@ -162,6 +109,7 @@
       "templates": [
         "itemBase"
       ],
+      "equipped": "false",
       "usageDie": "1d6"
     },
     "Weapon": {
@@ -169,6 +117,7 @@
         "itemBase"
       ],
       "damageDie": "1d6",
+      "equipped": "false",
       "type": "",
       "weaponTags": ""
     },
@@ -177,6 +126,7 @@
         "itemBase"
       ],
       "type": "",
+      "equipped": "false",
       "armourDie": "1"
     },
     "Feat": {
@@ -191,6 +141,9 @@
     "Esoterica": {
       "description": ""
     },
+    "Language": {
+      "description": ""
+    },
     "Sphere": {
       "attributeUsed": "",
       "level": 1,
@@ -203,34 +156,6 @@
       "sphere": "",
       "dice": "1d6",
       "roll": false
-    },
-    "item": {
-      "value": 0
-    },
-    "equipment": {
-      "value": 0
-    },
-    "weapon": {
-      "value": 0
-    },
-    "armour": {
-      "value": 0
-    },
-    "background": {
-      "value": 0
-    },
-    "esoterica": {
-      "value": 0
-    },
-    "sphere": {
-      "value": 0
-    },
-    "spell": {
-      "value": 0
-    }
-    ,
-    "feat": {
-      "value": 0
     }
   }
 }

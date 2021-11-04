@@ -106,7 +106,7 @@ export class ShazHackActor extends Actor {
       } else if(b.data.data.level == 2) {
         b.data.data.costReduction = -1 * costReduct;
       } else if(b.data.data.level == 3) {
-      b.data.data.costReduction = -1 * costReduct+1;
+      b.data.data.costReduction = -1 * (costReduct+1);
       }
     })
   }

@@ -14,7 +14,7 @@
   {{#each spells as |item id|}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <img class="item-image rollable-spell" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24"
-      height="24" data-label="{{item.name}}" data-sphere="{{item.data.sphere}}" data-roll="{{item.data.dice}}"
+      height="24" data-label="{{item.name}}" data-description="{{item.data.description}}" data-sphere="{{item.data.sphere}}" data-roll="{{item.data.dice}}"
       data-cost="{{item.data.cost}}" data-type="{{item.data.type}}" />
     <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24" /></div>
     <h4 class="item-name-weapon">{{item.name}}</h4>

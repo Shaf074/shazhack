@@ -1,0 +1,13 @@
+<div class="tab items" data-group="primary" data-tab="items">
+  <div class="resource flex-group-center">
+    <div class="resource-content flexrow flex-center flex-between">
+      <label class="resource-label">Inventory</label>
+      <input class="resource-label-currency" type="text" name="data.money" value="{{data.money}}"
+        data-dtype="Number" />
+      <label class="resource-label-currency"> Dinars</label>
+    </div>
+  </div>
+  {{> "systems/shazhack/templates/partials/item-partials/armour-partial.hbs"}}
+  {{> "systems/shazhack/templates/partials/item-partials/weapons-partial.hbs"}}
+  {{> "systems/shazhack/templates/partials/item-partials/equipment-partial.hbs"}}
+</div>

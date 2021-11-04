@@ -1,6 +1,6 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
   <header class="sheet-header">
-    {{> "systems/shazhack/templates/partials/character-partials/character-header.hbs"}}
+    {{> "systems/shazhack/templates/partials/character-header.hbs"}}
   </header>
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
@@ -12,12 +12,12 @@
   {{!-- Sheet Body --}}
   <section class="sheet-body">
     {{!-- Biography Tab --}}
-    {{> "systems/shazhack/templates/partials/character-partials/background-sheet.hbs"}} 
+    {{> "systems/shazhack/templates/partials/description-sheet.hbs"}}
     {{!-- Owned Items Tab --}}
-    {{> "systems/shazhack/templates/partials/character-partials/items-sheet.hbs"}}
+    {{> "systems/shazhack/templates/partials/items-sheet.hbs"}}
     {{!-- Owned Features Tab --}}
-    {{> "systems/shazhack/templates/partials/character-partials/feats-sheet.hbs"}}
+    {{> "systems/shazhack/templates/partials/feats-sheet.hbs"}}
     {{!-- Owned Spheres Tab --}}
-    {{> "systems/shazhack/templates/partials/character-partials/spheres-sheet.hbs"}}
+    {{> "systems/shazhack/templates/partials/spheres-sheet.hbs"}}
   </section>
-</form>templates/partials/character-partials/character-header.hbs
+</form>

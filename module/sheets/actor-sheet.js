@@ -9,7 +9,7 @@ export class ShazHackActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["shazhack", "sheet", "actor"],
-      template: "systems/shazhack/templates/character-sheet.hbs",
+      template: "systems/shazhack/templates/Character-sheet.hbs",
       width: 640,
       height: 665,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
@@ -20,6 +20,7 @@ export class ShazHackActorSheet extends ActorSheet {
 
   /* -------------------------------------------- */
 
+  
 
   /** @override */
   get template() {
@@ -30,7 +31,7 @@ export class ShazHackActorSheet extends ActorSheet {
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
     //return `${path}/actor-${this.actor.data.type}-sheet.html`;
-    return `${path}/character-sheet.hbs`;
+    return `${path}/${this.actor.data.type}-sheet.hbs`;
   }
 
   /** @override */
@@ -85,6 +86,7 @@ export class ShazHackActorSheet extends ActorSheet {
     // Initialize containers.
     const esoterica = [];
     const backgrounds = [];
+    const languages = [];
     const equipment = [];
     const weapons = [];
     const armour = [];
@@ -101,7 +103,11 @@ export class ShazHackActorSheet extends ActorSheet {
       if (i.type === 'Background') {
         backgrounds.push(i);
       }
-
+      // Append to languages
+      if (i.type === 'Language') {
+        languages.push(i);
+      }
+      // Append to esoterica
       if (i.type === 'Esoterica') {
         esoterica.push(i);
       }
@@ -109,9 +115,11 @@ export class ShazHackActorSheet extends ActorSheet {
       if (i.type === 'Equipment') {
         equipment.push(i);
       }
+      //Append to weapons
       if (i.type === 'Weapon') {
         weapons.push(i);
       }
+      // Append to armour
       if (i.type === 'Armour') {
         armour.push(i);
       }
@@ -119,16 +127,18 @@ export class ShazHackActorSheet extends ActorSheet {
       else if (i.type === 'Feat') {
         feats.push(i);
       }
-      // Append to spells.
+      // Append to spheres.
       else if (i.type === 'Sphere') {
         spheres.push(i);
       }
+      // Append to spells.
       else if (i.type === 'Spell') {
         spells.push(i);
       }
     }
     // Assign and return
     context.backgrounds = backgrounds;
+    context.languages = languages;
     context.esoterica = esoterica;
     context.equipment = equipment;
     context.weapons = weapons;
@@ -174,6 +184,7 @@ export class ShazHackActorSheet extends ActorSheet {
 
     // Rollable attributes.
     html.find('.rollable').click(this._onRoll.bind(this));
+    html.find('.rollable-attribute').click(this._onRollAttribute.bind(this));
     html.find('.rollable-background').click(this._onRollBackground.bind(this));
     html.find('.rollable-armour').click(this._onRollArmour.bind(this));
     html.find('.rollable-weapon').click(this._onRollWeapon.bind(this));
@@ -255,22 +266,57 @@ export class ShazHackActorSheet extends ActorSheet {
     }
   }
 
+   _onRollAttribute(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    let d = Dialog.prompt({
+      title: "Choose Attribute:",
+      content: `
+      <form>
+        <div class="form-group">
+          <label>Input text</label>
+          <select name="advantage-select" id="advantage-select">
+            <option value="Advantage">Advantage</option>
+            <option value="Normal" selected="selected" >Normal</option>
+            <option value="Disadvantage">Disadvantage</option>
+          </select>
+        </div>
+      </form>`,
+      label: "OK",
+      callback: (html) => {
+        if (dataset.roll) {
+          if (html.find('[id=advantage-select]')[0].value == "Advantage") {
+            console.log(dataset.roll);
+            let roll = new Roll("2d20kh1" + "+" + dataset.roll, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label}` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
+          }
+          if (html.find('[id=advantage-select]')[0].value == "Normal") {
+            let roll = new Roll("d20" + "+" + dataset.roll , this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label}` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
 
+          }
+          if (html.find('[id=advantage-select]')[0].value == "Disadvantage") {
+            let roll = new Roll("2d20kl1" + "+" + dataset.roll, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label}` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
 
-  /*  _onRoll(event) {
-     event.preventDefault();
-     const element = event.currentTarget;
-     const dataset = element.dataset;
- 
-     if (dataset.roll) {
-       let roll = new Roll(dataset.roll, this.actor.data.data);
-       let label = dataset.label ? `Rolling ${dataset.label}` : '';
-       roll.roll().toMessage({
-         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-         flavor: label
-       });
-     }
-   } */
+          }
+        }
+      }
+    });
+  }
 
   _onRollBackground(event) {
     event.preventDefault();
@@ -282,6 +328,11 @@ export class ShazHackActorSheet extends ActorSheet {
       <form>
         <div class="form-group">
           <label>Input text</label>
+          <select name="advantage-select" id="advantage-select">
+            <option value="Advantage">Advantage</option>
+            <option value="Normal" selected="selected" >Normal</option>
+            <option value="Disadvantage">Disadvantage</option>
+          </select>
           <select name="attribute-select" id="attribute-select">
             <option value="Physique">Physique</option>
             <option value="Agility">Agility</option>
@@ -292,13 +343,35 @@ export class ShazHackActorSheet extends ActorSheet {
       </form>`,
       label: "OK",
       callback: (html) => {
+
         if (dataset.roll) {
-          let roll = new Roll(dataset.roll + "+" + this.actor.data.data.attributes[html.find('[id=attribute-select]')[0].value].value, this.actor.data.data);
-          let label = dataset.label ? `Rolling ${dataset.label}` : '';
-          roll.roll().toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: label
-          });
+          if (html.find('[id=advantage-select]')[0].value == "Advantage") {
+            console.log(dataset.roll);
+            let roll = new Roll("2d20kh1" + "+" + dataset.roll + "+" + this.actor.data.data.attributes[html.find('[id=attribute-select]')[0].value].value, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label}` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
+          }
+          if (html.find('[id=advantage-select]')[0].value == "Normal") {
+            let roll = new Roll("d20" + "+" + dataset.roll + "+" + this.actor.data.data.attributes[html.find('[id=attribute-select]')[0].value].value, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label}` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
+
+          }
+          if (html.find('[id=advantage-select]')[0].value == "Disadvantage") {
+            let roll = new Roll("2d20kl1" + "+" + dataset.roll + "+" + this.actor.data.data.attributes[html.find('[id=attribute-select]')[0].value].value, this.actor.data.data);
+            let label = dataset.label ? `Rolling ${dataset.label}` : '';
+            roll.roll().toMessage({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              flavor: label
+            });
+
+          }
         }
       }
     });
@@ -308,6 +381,21 @@ export class ShazHackActorSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
+    var sizeDistance = new Map();
+    sizeDistance.set(0,"Single Target/Short Range");
+    sizeDistance.set(1,"Small Effect Area/Medium Range");
+    sizeDistance.set(2,"Moderate Effect Area/Long Range");
+    sizeDistance.set(4,"Large Effect Area/Very Long Range");
+    var duration = new Map();
+    duration.set(0,"Instant");
+    duration.set(1,"Short");
+    duration.set(2,"Medium");
+    duration.set(4,"Long");
+    var potency = new Map();
+    potency.set(0, "Minimal");
+    potency.set(2, "Minor");
+    potency.set(4, "Moderate");
+    potency.set(6, "Major");
     let d = Dialog.prompt({
       title: "Choose Attribute:",
       content: `
@@ -322,28 +410,28 @@ export class ShazHackActorSheet extends ActorSheet {
         <div class="form-group flexrow">
           <label>Size/Distance:</label>
           <select name="sizedistance-select" id="sizedistance-select">
-            <option value=0 >Single Target/Short Range</option>
-            <option value=1>Small Effect Area/Medium Range</option>
-            <option value=2>Moderate Effect Area/Long Range</option>
-            <option value=4>Large Effect Area/Very Long Range</option>
+            <option value=0 >Single Target/Short Range (Cost: 0)</option>
+            <option value=1>Small Effect Area/Medium Range (Cost: 1)</option>
+            <option value=2>Moderate Effect Area/Long Range (Cost: 2)</option>
+            <option value=4>Large Effect Area/Very Long Range (Cost: 4)</option>
           </select>
         </div>
         <div class="form-group flexrow">
           <label>Duration:</label>
           <select name="duration-select" id="duration-select">
-            <option value=0 >Instant</option>
-            <option value=1>Short</option>
-            <option value=2>Medium</option>
-            <option value=4>Long</option>
+            <option value=0 >Instant (Cost: 0)</option>
+            <option value=1>Short [< 1 minute] (Cost: 1)</option>
+            <option value=2>Medium [> 1 minute & < 1 hour] (Cost: 2)</option>
+            <option value=4>Long [> 1 hour & < 1 day] (Cost: 4)</option>
           </select>
         </div>
         <div class="form-group flexrow">
           <label>Potency:</label>
           <select name="potency-select" id="potency-select">
-            <option value=0 >Minimal</option>
-            <option value=2>Minor</option>
-            <option value=4>Moderate</option>
-            <option value=6>Major</option>
+            <option value=0 >Minimal (Cost: 0)</option>
+            <option value=2>Minor (Cost: 2)</option>
+            <option value=4>Moderate (Cost: 4)</option>
+            <option value=6>Major (Cost: 6)</option>
           </select>
         </div>
       </form>`,
@@ -358,13 +446,15 @@ export class ShazHackActorSheet extends ActorSheet {
             flavor: label
           });
         }
-        var cost = parseInt(html.find('[id=sizedistance-select]')[0].value) +
-          parseInt(html.find('[id=duration-select]')[0].value) +
-          parseInt(html.find('[id=potency-select]')[0].value) +
+        var sizeDistanceValue = html.find('[id=sizedistance-select]')[0].value;
+        var durationValue = html.find('[id=duration-select]')[0].value;
+        var potencyValue = html.find('[id=potency-select]')[0].value;
+        var cost = parseInt(sizeDistanceValue) +
+          parseInt(durationValue) +
+          parseInt(potencyValue) +
           parseInt(dataset.reduction);
-          console.log(dataset);
         if (cost <= 0) {
-          if (parseInt(html.find('[id=sizedistance-select]')[0].value) == 0 && parseInt(html.find('[id=duration-select]')[0].value) == 0 && parseInt(html.find('[id=potency-select]')[0].value) == 0) {
+          if (parseInt(sizeDistanceValue) == 0 && parseInt(durationValue) == 0 && parseInt(potencyValue) == 0) {
             cost = 0
           } else {
             cost = 1;
@@ -372,7 +462,11 @@ export class ShazHackActorSheet extends ActorSheet {
         }
         ChatMessage.create({
           speaker: { alias: this.actor.name },
-          content: "This costs " + cost + " hit point(s) to cast. ",
+          content: "<h3>Using Sphere: " + dataset.label + "| Level " + dataset.level + "</h3>" +
+            "<p> This costs <b style='color:green'>" + cost + "</b> hit point(s) to cast.</p>" +
+            "<p> <b>Size/Distance:</b> " + sizeDistance.get(parseInt(sizeDistanceValue))+ "</p>" +
+            "<p> <b>Duration:</b> " + duration.get(parseInt(durationValue)) + "</p>" +
+            "<p> <b>Potency:</b> " + potency.get(parseInt(potencyValue)) + "</p>",
           type: CONST.CHAT_MESSAGE_TYPES.OTHER,
         });
       }
@@ -385,9 +479,9 @@ export class ShazHackActorSheet extends ActorSheet {
     const element = event.currentTarget;
     const dataset = element.dataset;
     var abilityBonus = 0;
-    // console.log(this.actor.items.find(a => a.type == "sphere"));
+
     var cost = dataset.cost;
-    //console.log(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere))
+
     if (this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere) != null) {
       var adjustCost = parseInt(cost) + parseInt(this.actor.items.find(a => a.type == "sphere" && a.data.name == dataset.sphere).data.data.reduction);
     } else {
@@ -399,7 +493,7 @@ export class ShazHackActorSheet extends ActorSheet {
     } else if (cost == 0) {
       adjustCost = 0;
     }
-    // console.log(adjustCost);
+
     var abilityBonus = Math.max(this.actor.data.data.attributes.Presence.value, this.actor.data.data.attributes.Intuition.value)
     let roll = new Roll("d20+" + abilityBonus, this.actor.data.data);
     let label = dataset.label ? `Rolling ${dataset.label} Spell` : '';
@@ -409,7 +503,7 @@ export class ShazHackActorSheet extends ActorSheet {
     });
     ChatMessage.create({
       speaker: { alias: this.actor.name },
-      content: "This costs " + adjustCost + " hit point(s) to cast.",
+      content: "This costs " + adjustCost + " hit point(s) to cast." + "\n" + dataset.description,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
     });
     let roll2 = new Roll(dataset.roll, this.actor.data.data);
@@ -462,7 +556,6 @@ export class ShazHackActorSheet extends ActorSheet {
             <select name="attribute-select" id="attribute-select">
               <option value="Physique">Physique</option>
               <option value="Agility">Agility</option>
-
             </select>
           </div>
         </form>`,

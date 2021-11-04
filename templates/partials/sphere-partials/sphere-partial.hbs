@@ -13,7 +13,7 @@
   {{#each spheres}}
   <li class="item flexrow" data-item-id="{{this._id}}">
     <img class="item-image rollable-sphere" src="icons/svg/d20-highlight.svg" title="{{item.name}}" width="24"
-      height="24" data-label="{{this.name}}" data-reduction="{{this.data.costReduction}}" />
+      height="24" data-level="{{this.data.level}}" data-label="{{this.name}}" data-reduction="{{this.data.costReduction}}" />
     <div class="item-image"><img src="{{this.img}}" title="{{this.name}}" width="24" height="24" /></div>
     <h4 class="item-name" title="{{actor.name}}">{{this.name}}</h4>
     <h4 class="item-name-level">{{this.data.level}}</h4>

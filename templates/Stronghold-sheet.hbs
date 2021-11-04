@@ -1,0 +1,20 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+  <header class="sheet-header">
+    {{> "systems/shazhack/templates/partials/character-header.hbs"}}
+  </header>
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="items">Improvements</a>
+    <a class="item" data-tab="feats">Artisans</a>
+  </nav>
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    {{!-- Biography Tab --}}
+    {{> "systems/shazhack/templates/partials/description-sheet.hbs"}}
+    {{!-- Owned Items Tab --}}
+    {{> "systems/shazhack/templates/partials/items-sheet.hbs"}}
+    {{!-- Owned Features Tab --}}
+    {{> "systems/shazhack/templates/partials/feats-sheet.hbs"}}
+  </section>
+</form>

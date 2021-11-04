@@ -1,0 +1,12 @@
+<div class="tab biography" data-group="primary" data-tab="description">
+  <div class="attributes grid grid-2col">
+    <div class="split-tab">
+      <label class="resource-label">Description</label>
+      {{editor content=data.biography target="data.biography" button=true owner=owner editable=editable}}
+    </div>
+    <div class="split-tab">
+      {{> "systems/shazhack/templates/partials/background-partials/backgrounds-partial.hbs"}}
+      {{> "systems/shazhack/templates/partials/background-partials/esoterica-partial.hbs"}}
+    </div>
+  </div>
+</div>
