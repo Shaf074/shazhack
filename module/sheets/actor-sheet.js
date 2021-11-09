@@ -116,7 +116,7 @@ export class ShazHackActorSheet extends ActorSheet {
         equipment.push(i);
       }
       //Append to weapons
-      if (i.type === 'Weapon') {
+      if (i.type === 'Weapon' ||i.type === 'weapon' ) {
         weapons.push(i);
       }
       // Append to armour

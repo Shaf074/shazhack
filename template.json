@@ -85,6 +85,7 @@
       "Item",
       "Equipment",
       "Weapon",
+      "weapon",
       "Armour",
       "Feat",
       "Background",
@@ -113,6 +114,15 @@
       "usageDie": "1d6"
     },
     "Weapon": {
+      "templates": [
+        "itemBase"
+      ],
+      "damageDie": "1d6",
+      "equipped": "false",
+      "type": "",
+      "weaponTags": ""
+    },
+    "weapon": {
       "templates": [
         "itemBase"
       ],

@@ -5,3 +5,6 @@
 # Node Modules
 node_modules/
 npm-debug.log
+Dialog.js
+Dialog2.js
+ptoken.dart
