@@ -11,7 +11,7 @@ async function preloadHandlebarsTemplates() {
     "systems/shazhack/templates/partials/character-partials/character-header.hbs",
     "systems/shazhack/templates/partials/character-partials/background-sheet.hbs",
     "systems/shazhack/templates/partials/character-partials/feats-sheet.hbs",
-    "systems/shazhack/templates/partials/character-partials/abilties-sheet.hbs",
+    "systems/shazhack/templates/partials/character-partials/abilities-sheet.hbs",
     "systems/shazhack/templates/partials/character-partials/items-sheet.hbs",
     "systems/shazhack/templates/partials/character-partials/spheres-sheet.hbs",
     "systems/shazhack/templates/partials/header-partials/attackbonus-partial.hbs",
@@ -32,7 +32,7 @@ async function preloadHandlebarsTemplates() {
     "systems/shazhack/templates/partials/npc-partials/feats-sheet.hbs",
     "systems/shazhack/templates/partials/npc-partials/items-sheet.hbs"
   ];
-
+  
   return loadTemplates(templatePaths);
 }
 
