@@ -9,16 +9,28 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 2
-      - uses: salsify/action-detect-and-tag-new-version@v2
+      - name: Actions Ecosystem Action Regex Match
+        uses: actions-ecosystem/action-regex-match@v2.0.2
+        id: regex-match
+        with:
+          text: ${{ github.event.head_commit.message }}
+          regex: '\[(bug|feature|major)\]'
+      - name: Find Tag Version
+        uses: salsify/action-detect-and-tag-new-version@v2
         id: tag_version
         with:
           version-command: |
             cat VERSION
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Increment Semantic Version
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        id: bump_version
+        with:
+          current-version: ${{ steps.tag_version.outputs.current-version }}
+          version-fragment: ${{ steps.regex-match.outputs.group1 }}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           zip --recurse-paths shazhack-main *
@@ -28,8 +40,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.tag_version.outputs.current-version }}
-          release_name: Release ${{ steps.tag_version.outputs.current-version }}
+          tag_name: ${{ steps.bump_version.outputs.next-version }}
+          release_name: Release ${{ steps.bump_version.outputs.next-version }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
