@@ -65,6 +65,10 @@ jobs:
           file: system.json
           field: download
           value: ${{ steps.update_path.outputs.replaced }}
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           zip --recurse-paths shazhack-main *
