@@ -1,6 +1,6 @@
 {
   "name": "shazhack",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "CSS compiler for the shazhack system",
   "scripts": {
     "build": "gulp",
