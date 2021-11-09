@@ -9,7 +9,7 @@ export class ShazHackActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["shazhack", "sheet", "actor"],
-      template: "systems/shazhack/templates/Character-sheet.hbs",
+      template: "systems/shazhack/templates/character-sheet.hbs",
       width: 640,
       height: 665,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
@@ -31,7 +31,8 @@ export class ShazHackActorSheet extends ActorSheet {
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
     //return `${path}/actor-${this.actor.data.type}-sheet.html`;
-    return `${path}/${this.actor.data.type}-sheet.hbs`;
+    const lc = this.actor.data.type.toLowerCase();
+    return `${path}/${lc}-sheet.hbs`;
   }
 
   /** @override */
