@@ -92,7 +92,8 @@
       "Sphere",
       "Esoterica",
       "Spell", 
-      "Language"  
+      "Language", 
+      "Ability" 
     ],
     "templates": {
       "itemBase": {
@@ -166,6 +167,11 @@
       "sphere": "",
       "dice": "1d6",
       "roll": false
+    },
+    "Ability": {
+      "currentUses": 0,
+      "maxUses": 1,
+      "description": ""
     }
   }
 }
