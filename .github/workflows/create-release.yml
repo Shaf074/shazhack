@@ -1,57 +1,63 @@
-on:
-  #pull_request:
-  push:
-    # Sequence of patterns matched against refs/tags    
 name: Create Release and Upload Asset
+on: [push] 
 
 jobs:
-  build:
-    name: Create Release
+  build_and_release:
+    name: Increment Version, Create Tag and Release with Asset
     runs-on: ubuntu-latest
     steps:
+    #
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
-      - name: Actions Ecosystem Action Regex Match
+
+      - name: Check for update level from commit message
         uses: actions-ecosystem/action-regex-match@v2.0.2
         id: regex-match
         with:
           text: ${{ github.event.head_commit.message }}
           regex: '\[(bug|feature|major)\]'
-      - name: Find Tag Version
+
+      - name: Find tag version number
         uses: salsify/action-detect-and-tag-new-version@v2
         id: tag_version
         with:
           version-command: |
             cat VERSION
-      - name: Increment Semantic Version
+
+      - name: Increment tag version
         uses: christian-draeger/increment-semantic-version@1.0.2
         id: bump_version
         with:
           current-version: ${{ steps.tag_version.outputs.current-version }}
           version-fragment: ${{ steps.regex-match.outputs.group1 }}
+
       - name: Update version in VERSION file
         run: |
           echo ${{ steps.bump_version.outputs.next-version }} > VERSION
+
       - name: Update package.json version
         uses: jossef/action-set-json-field@v1
         with:
           file: package.json
           field: version
           value: ${{ steps.bump_version.outputs.next-version }}
+
       - name: Update system.json version
         uses: jossef/action-set-json-field@v1
         with:
           file: system.json
           field: version
           value: ${{ steps.bump_version.outputs.next-version }}
+
       - name: Get JSON Property
         id: download_version
         uses: notiz-dev/github-action-json-property@release
         with: 
           path: 'system.json'
           prop_path: 'download'
+
       - name: Update download path
         uses: frabert/replace-string-action@v2.0
         id: update_path
@@ -59,19 +65,23 @@ jobs:
           pattern: '(https:\/\/github\.com\/Shaf074\/shazhack\/releases\/download\/)[0-9.]{5}(\/shazhack-main\.zip)'
           string: '${{ steps.download_version.outputs.prop }}'
           replace-with: '$1${{ steps.bump_version.outputs.next-version }}$2'
+
       - name: Update system.json version
         uses: jossef/action-set-json-field@v1
         with:
           file: system.json
           field: download
           value: ${{ steps.update_path.outputs.replaced }}
+
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           zip --recurse-paths shazhack-main *
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -82,6 +92,7 @@ jobs:
           release_name: Release ${{ steps.bump_version.outputs.next-version }}
           draft: false
           prerelease: false
+          
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
