@@ -405,16 +405,16 @@ export class ShazHackActorSheet extends ActorSheet {
           <label>Select Attribute:</label>
           <select name="attribute-select" id="attribute-select">
             <option value="Roll">Roll</option>
-            <option value="NoRoll">No Roll</option>
+            <option value="NoRoll" selected="selected" >No Roll</option>
           </select>
         </div>
         <div class="form-group flexrow">
           <label>Size/Distance:</label>
           <select name="sizedistance-select" id="sizedistance-select">
-            <option value=0 >Single Target/Short Range (Cost: 0)</option>
-            <option value=1>Small Effect Area/Medium Range (Cost: 1)</option>
-            <option value=2>Moderate Effect Area/Long Range (Cost: 2)</option>
-            <option value=4>Large Effect Area/Very Long Range (Cost: 4)</option>
+            <option value=0 >Single Target/Short Range  (Cost: 0)</option>
+            <option value=1>Small Effect Area [<5m rad.] /Medium Range (Cost: 1)</option>
+            <option value=2>Moderate Effect Area [5m<X<20m rad.]/Long Range (Cost: 2)</option>
+            <option value=4>Large Effect Area [20m<X<100m rad.]/Very Long Range (Cost: 4)</option>
           </select>
         </div>
         <div class="form-group flexrow">
