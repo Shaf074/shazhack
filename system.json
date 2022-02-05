@@ -9,7 +9,7 @@
   "flags": {},
   "version": "3.0.12",
   "minimumCoreVersion": "9.249",
-  "compatibleCoreVersion": "9.249",
+  "compatibleCoreVersion": "9.259",
   "scripts": [],
   "esmodules": [
     "module/shazhack.js"
