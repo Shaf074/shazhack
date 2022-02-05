@@ -8,8 +8,8 @@
   "license": "LICENSE.txt",
   "flags": {},
   "version": "3.0.12",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.9",
+  "minimumCoreVersion": "9.249",
+  "compatibleCoreVersion": "9.249",
   "scripts": [],
   "esmodules": [
     "module/shazhack.js"
