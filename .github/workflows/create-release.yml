@@ -58,7 +58,7 @@ jobs:
         with:
           file: system.json
           field: version
-          value: ${{format('https://github.com/Shaf074/shazhack/releases/download/{0}/shazhack-main.zip', { steps.bump_version.outputs.next-version })}}
+          value: ${{format('https://github.com/Shaf074/shazhack/releases/download/{0}/shazhack-main.zip', steps.bump_version.outputs.next-version)}}
 
       - name: Commit & Push changes
         uses: actions-js/push@master
