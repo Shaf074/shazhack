@@ -1,8 +1,8 @@
     <div class="tab feats" data-group="primary" data-tab="feats">
       <ol class="items-list">
         <li class="item flexrow item-header">
-          <div class="item-name">Name</div>
-          <div class="item-name-level" text-align: right>Choice</div>
+          <div class="item-name-featname">Name</div>
+          <div class="item-name-featchoice" text-align: right>Choice</div>
           <div class="item-name-level" text-align: right>Level</div>
           <div class="item-controls">
             <a class="item-control item-create" title="Create item" data-type="Feat"><i class="fas fa-plus"></i> Add
@@ -11,8 +11,8 @@
         </li>
         {{#each feats as |item id|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
-          <h4 class="item-name">{{item.name}}</h4>
-          <h4 class="item-name-level">{{item.data.choice}}</h4>
+          <h4 class="item-name-featname">{{item.name}}</h4>
+          <h4 class="item-name-featchoice">{{item.data.choice}}</h4>
           <h4 class="item-name-level">{{item.data.level}}</h4>
           <div class="item-controls">
             <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>

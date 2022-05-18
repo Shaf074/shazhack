@@ -9,21 +9,21 @@
     and it will add a small amount of padding, a border, and will
     center all of its child elements content and text. --}}
     <div class="resource flex-group-center">
-      {{> "systems/shazhack/templates/partials/header-partials/hitpoints-partial.hbs"}}
+      {{> "systems/shazhack/templates/partials/character-partials/header-partials/hitpoints-partial.hbs"}}
     </div>
     <div class="resource flex-group-center">
-      {{> "systems/shazhack/templates/partials/header-partials/hitdice-partial.hbs"}}
+      {{> "systems/shazhack/templates/partials/character-partials/header-partials/hitdice-partial.hbs"}}
     </div>
     {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
     use both the "grid" and "grid-Ncol" class where "N" can be any number
     from 1 to 12 and will create that number of columns. --}}
     <div class="attributes grid grid-2col">
       <div class="resource flex-group-center">
-        {{> "systems/shazhack/templates/partials/header-partials/attributes-partial.hbs"}}
+        {{> "systems/shazhack/templates/partials/character-partials/header-partials/attributes-partial.hbs"}}
       </div>
       <div class="resource flex-group-center">
-        {{> "systems/shazhack/templates/partials/header-partials/attackbonus-partial.hbs"}}
-        {{> "systems/shazhack/templates/partials/header-partials/encumbrance-partial.hbs"}}
+        {{> "systems/shazhack/templates/partials/character-partials/header-partials/attackbonus-partial.hbs"}}
+        {{> "systems/shazhack/templates/partials/character-partials/header-partials/encumbrance-partial.hbs"}}
       </div>
     </div>
   </div>

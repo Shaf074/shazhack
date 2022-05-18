@@ -17,6 +17,9 @@ export class ShazHackActor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+
+
+
   }
 
   /**
@@ -43,15 +46,15 @@ export class ShazHackActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    if (actorData.type == 'character'){
-      actorData.type = 'Character';
-      return;
-    } 
+
     if (actorData.type !== 'Character') return;
 
     // Make modifications to data here. For example:
     const data = actorData.data;
+
+
     var totalEnc = 0;
+    
     var allItem = actorData.items.filter(word => word.type == "Weapon" || word.type == "Armour" || word.type == "Equipment");
     allItem.forEach(a => totalEnc += parseInt(a.data.data.encumbrance));
     data.encumbrance.value = totalEnc;
@@ -87,8 +90,12 @@ export class ShazHackActor extends Actor {
 
     //Determine Dodge value
     data.combat.dodge.value = data.attributes.Agility.value;
-    if (feats.find(a => a.data.name === "Artful Dodger")) {
-      data.combat.dodge.value = Math.floor(data.combat.dodge.value * 2);
+    if (feats.find(a => a.data.name === "Warrior") != null) {
+      if (feats.find(a => a.data.name === "Artful Dodger").data.data.level == 1) {
+        data.combat.dodge.value = Math.floor(data.combat.dodge.value * 2);
+      } else if (feats.find(a => a.data.name === "Artful Dodger").data.data.level == 2) {
+       data.combat.dodge.value = Math.floor(data.combat.dodge.value * 3);
+      }
     }
 
     if (data.hitDice.value > data.hitDice.max) {
@@ -99,14 +106,18 @@ export class ShazHackActor extends Actor {
     if (feats.find(a => a.data.name === "Div Ancestry")) {
       data.encumbrance.max = Math.floor(data.encumbrance.max * 1.5);
     }
+
+    //determine cost reduction
     var costReduct = Math.max(data.attributes.Intuition.value, data.attributes.Presence.value);
-    actorData.items.filter(a => a.type === "Sphere").forEach(function(b) {
+    
+    
+    actorData.items.filter(a => a.data.type === "Sphere").forEach(function(b) {
       if(b.data.data.level == 1) {
         b.data.data.costReduction = -1 * Math.ceil(costReduct/2);
       } else if(b.data.data.level == 2) {
         b.data.data.costReduction = -1 * costReduct;
       } else if(b.data.data.level == 3) {
-      b.data.data.costReduction = -1 * (costReduct+1);
+      b.data.data.costReduction = -1 * (Math.ceil(costReduct*1.5));
       }
     })
   }

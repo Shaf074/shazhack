@@ -56,6 +56,13 @@
   cursor: pointer;
 }
 
+.rollable-sphere:hover, .rollable-ability:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  box-shadow: 0 0 5px red;
+  cursor: pointer;
+}
+
 .rollable-hd:hover, .rollable-hd:focus {
   color: #000;
   text-shadow: 0 0 10px red;
@@ -184,7 +191,7 @@
 .shazhack .sheet-header {
   -webkit-box-flex: 0;
   -ms-flex: 1 0 auto;
-  flex: 1 0 auto;
+  flex: 0 0 auto;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -294,11 +301,15 @@
 .shazhack .resource-label-noroll {
   font-weight: bold;
   text-transform: capitalize;
-  min-width: 70%;
+  min-width: 65%;
   text-align: left;
 }
 .shazhack .resource-input {
-  max-width: 10%;
+  max-width: 11%;
+}
+
+.shazhack .resource-input-encumbrance {
+  max-width: 20%;
 }
 
 .shazhack .label-padding {
@@ -359,9 +370,34 @@
   min-width: 40%;
 }
 
+.shazhack .items-list .item-name-featname {
+  margin: 0;
+  min-width: 35%;
+}
+
+.shazhack .items-list .item-name-featchoice {
+  margin: 0;
+  min-width: 35%;
+}
+
+.shazhack .items-list .item-name-background {
+  margin: 0;
+  min-width: 60%;
+}
+
+.shazhack .items-list .item-name-language {
+  margin: 0;
+  min-width: 70%;
+}
+
 .shazhack .items-list .item-name-weapon {
   margin: 0;
-  min-width: 22%;
+  min-width: 28%;
+}
+
+.shazhack .items-list .item-name-weapon-tags {
+  margin: 0;
+  min-width: 28%;
 }
 
 .shazhack .items-list .item-name-level {
@@ -369,6 +405,10 @@
   max-width: 14%;
 }
 
+.shazhack .items-list .item-name-level-weapon {
+  margin: 0;
+  max-width: 11%;
+}
 
 .shazhack .items-list .item-controls {
   -webkit-box-flex: 0;

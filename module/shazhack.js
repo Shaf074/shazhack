@@ -14,23 +14,25 @@ async function preloadHandlebarsTemplates() {
     "systems/shazhack/templates/partials/character-partials/abilities-sheet.hbs",
     "systems/shazhack/templates/partials/character-partials/items-sheet.hbs",
     "systems/shazhack/templates/partials/character-partials/spheres-sheet.hbs",
-    "systems/shazhack/templates/partials/header-partials/attackbonus-partial.hbs",
-    "systems/shazhack/templates/partials/header-partials/attributes-partial.hbs",
-    "systems/shazhack/templates/partials/header-partials/encumbrance-partial.hbs",
-    "systems/shazhack/templates/partials/header-partials/hitdice-partial.hbs",
-    "systems/shazhack/templates/partials/header-partials/hitpoints-partial.hbs",
-    "systems/shazhack/templates/partials/item-partials/armour-partial.hbs",
-    "systems/shazhack/templates/partials/item-partials/equipment-partial.hbs",
-    "systems/shazhack/templates/partials/item-partials/weapons-partial.hbs",
-    "systems/shazhack/templates/partials/sphere-partials/sphere-partial.hbs",
-    "systems/shazhack/templates/partials/sphere-partials/spell-partial.hbs",
-    "systems/shazhack/templates/partials/background-partials/backgrounds-partial.hbs",
-    "systems/shazhack/templates/partials/background-partials/esoterica-partial.hbs",
-    "systems/shazhack/templates/partials/background-partials/languages-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/background-partials/backgrounds-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/background-partials/esoterica-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/background-partials/languages-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/header-partials/attackbonus-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/header-partials/attributes-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/header-partials/encumbrance-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/header-partials/hitdice-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/header-partials/hitpoints-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/item-partials/armour-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/item-partials/equipment-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/item-partials/weapons-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/sphere-partials/sphere-partial.hbs",
+    "systems/shazhack/templates/partials/character-partials/sphere-partials/spell-partial.hbs",
     "systems/shazhack/templates/partials/npc-partials/npc-header.hbs",
     "systems/shazhack/templates/partials/npc-partials/background-sheet.hbs",
     "systems/shazhack/templates/partials/npc-partials/feats-sheet.hbs",
-    "systems/shazhack/templates/partials/npc-partials/items-sheet.hbs"
+    "systems/shazhack/templates/partials/npc-partials/items-sheet.hbs",
+    "systems/shazhack/templates/partials/npc-partials/description-sheet.hbs",
+    "systems/shazhack/templates/partials/character-partials/backgrounds-partial.hbs",
   ];
   
   return loadTemplates(templatePaths);
@@ -56,8 +58,8 @@ Hooks.once('init', async function() {
   };
 
   // Define custom Entity classes
-  CONFIG.Actor.entityClass = ShazHackActor;
-  CONFIG.Item.entityClass = ShazHackItem;
+  CONFIG.Actor.documentClass = ShazHackActor;
+  CONFIG.Item.documentClass = ShazHackItem;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
